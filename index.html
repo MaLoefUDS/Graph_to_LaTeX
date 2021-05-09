@@ -52,22 +52,9 @@
     <script type="text/javascript" src="objects.js"></script>
     <script type="text/javascript" src="helpers.js"></script>
     <script type="text/javascript" src="grid_functions.js"></script>
+    <script type="text/javascript" src="global_varibales.js"></script>
 
     <script>
-
-    var mode = 1;
-    var read = false;
-    var grid_status = true;
-    var objects = [];
-    var lines = [];
-    var griding = 20;
-    
-    var text_size = "10px";
-    var radius = 30;
-    var square_w = 80;
-    var square_h = 50;
-
-    var last_selected = 0;
 
     let set_mode = function(param) {
         mode = param;
@@ -122,7 +109,7 @@
             lines = [];
         }
     }
-    
+
     let draw = function() {
         
         clear_canvas(clear_objects=false);
