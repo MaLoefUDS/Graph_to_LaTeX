@@ -30,9 +30,13 @@ let translation_table = function (input) {
     return input;
 }
 
-let safe_to_json = function(elements) {
-    
-    download(JSON.stringify(elements, null, 2), "GtL");
+
+let safe = function() {
+    let dict = {
+        obj: objects,
+        lns: lines
+    }
+    download(JSON.stringify(dict, null, 2), "GtL");
 }
 
 let load_from_json = function() {
