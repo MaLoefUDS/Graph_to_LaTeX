@@ -1,0 +1,468 @@
+<html>
+
+<head>
+
+    <title>
+        GtL (Beta)
+    </title>
+
+</head>
+
+<body>
+
+    <canvas id="myCanvas" width=x height=y style="border:1px solid #000000;"> </canvas>
+    
+    <div style="margin-left: 10px;">
+    
+        <h3 id="selection">
+            Edit Mode
+        </h3> 
+        
+        <input type="search" placeholder="Preview" id="preview" disabled="true" hidden="true">
+
+        <br>
+
+        <b style="font-size: 10px;">Drawing Functionality:</b>
+        <button onclick="circ()"> Circle </button>
+        <button onclick="squr()"> Square </button>
+        <button onclick="text()"> Text </button>
+        <button onclick="line()"> Line </button>
+        
+        <br>
+        
+        <b style="font-size: 10px;">Editing Functionality</b>
+        <button onclick="switch_grid_status()"> Grid </button>
+        <button onclick="clear_canvas(clear_objects=true)"> Clear </button>
+        <button onclick="edit()"> Edit </button>
+        
+        <br>
+
+        <b style="font-size: 10px;">Storing Functionality</b>
+        <button onclick="safe()"> Safe </button>
+        <button onclick="load_from_json();"> Load </button>
+        <input type="file" value="Load">
+        
+        <br>
+        
+        <h5 id="mouse"> 0,0 </h5>
+        <i style="color: #d0d0d0; font-size: 10px;">GtL (Beta) by @Maximilian L&ouml;ffler</i>
+    
+    </div>
+
+    <script type="text/javascript" src="objects.js"></script>
+    <script type="text/javascript" src="helpers.js"></script>
+
+    <script>
+
+    mode = 1;
+    read = false;
+    grid_status = true;
+    objects = [];
+    lines = [];
+    griding = 20;
+    
+    text_size = "10px";
+    radius = 30;
+    square_w = 80;
+    square_h = 50;
+
+    last_selected = 0;
+
+    let circ = function() {
+        mode = 1;
+    }
+    let squr = function() {
+        mode = 2;
+    }
+    let line = function() {
+        mode = 3;
+    }
+    let edit = function() {
+        mode = 4;
+    }
+    let text = function() {
+        mode = 5;
+    }
+
+    let config = function(act) {
+        if (mode == 1) {
+            document.getElementById('selection').innerHTML = "Circle Selected";
+            document.getElementById('selection').style.color = "black";
+        } else if (mode == 2) {
+            document.getElementById('selection').innerHTML = "Square Selected";
+            document.getElementById('selection').style.color = "black";
+        } else if (mode == 3) {
+            document.getElementById('selection').innerHTML = "Line Selected";
+            document.getElementById('selection').style.color = "black";
+        } else if (mode == 5) {
+            document.getElementById('selection').innerHTML = "Text Selected";
+            document.getElementById('selection').style.color = "black";
+        } else {
+            document.getElementById('selection').innerHTML = "Edit Mode";
+            document.getElementById('selection').style.color = "red";
+        }
+    }
+
+    let rescale_canvas = function() {
+        x = document.body.clientWidth;
+        y = document.body.clientHeight;
+
+        c = document.getElementById('myCanvas');
+        c.width = x;
+        c.height = y / 1.3;
+
+        document.body.style.marginLeft = 0;
+        document.body.style.marginRight = 0;
+        document.body.style.marginTop = 0;
+
+        if (grid_status) {
+            regrid();
+        }
+        draw();
+    }
+
+    let clear_canvas = function(clear_objects) {
+        c = document.getElementById('myCanvas');
+        ctx = c.getContext('2d');
+        ctx.fillStyle = "#e0e0e0";
+        ctx.fillRect(0, 0, c.width, c.height);
+        
+        if (grid_status) {
+            grid();
+        }
+
+        if (clear_objects) {
+            objects = [];
+            lines = [];
+        }
+    }
+
+    let grid = function() {
+        c = document.getElementById('myCanvas');
+        ctx = c.getContext('2d');
+
+        ratio = c.height / c.width;
+
+        ctx.strokeStyle = "#d0d0d0";
+
+        for (var i = 0; i < c.height; i = i + c.height / griding) {
+            ctx.beginPath();
+            ctx.moveTo(0, i);
+            ctx.lineTo(c.width, i)
+            ctx.stroke();
+        }
+        for (var i = 0; i < c.width; i = i + c.height / griding) {
+            ctx.beginPath();
+            ctx.moveTo(i, 0);
+            ctx.lineTo(i, c.height)
+            ctx.stroke();
+        }
+    }
+
+    let switch_grid_status = function() { grid_status = !grid_status; draw(); };
+
+    let regrid = function() {
+        for (var i = 0; i < objects[i].length; i++) {
+            var x,y = get_closed_on_grid(objects[i].get_x(), objects[i].get_y());
+            objects[i].set_x(x);
+            objects[i].set_y(y);
+        }
+    }
+
+    let safe = function() {
+        let dict = {
+            obj: objects,
+            lns: lines
+        }
+        safe_to_json(dict);
+    }
+
+    let draw = function() {
+        
+        clear_canvas(clear_objects=false);
+
+        for (var i = 0; i < lines.length; i++) {
+            s = lines[i].s;
+            e = lines[i].e;
+
+            ctx.strokeStyle = 'black';
+
+            // the line
+            ctx.beginPath();
+            ctx.moveTo(s.get_x(), s.get_y());
+            ctx.lineTo(e.get_x(), e.get_y());
+            ctx.stroke();
+
+            // the "triangle"
+            ctx.beginPath();
+            ctx.arc(e.get_x(), e.get_y(), 5, 0, 2 * Math.PI);
+            ctx.fillStyle = "black";
+            ctx.fill();
+        }
+
+        for (var i = 0; i < objects.length; i++) {
+            
+            x = objects[i].get_x();
+            y = objects[i].get_y();
+            type = objects[i].type;
+
+            if (type == "circle") {
+                ctx.beginPath();
+                ctx.arc(x, y, radius, 0, 2 * Math.PI);
+                ctx.fillStyle = "white";
+                ctx.fill();
+            } else if (type == "square") {
+                if (!objects[i].is_text()) {
+                    ctx.beginPath();
+                    ctx.rect(x - square_w / 2, y - square_h / 2, square_w, square_h);
+                    ctx.fillStyle = "white";
+                    ctx.fill();
+                } 
+            }
+
+            ctx.fillStyle = objects[i].get_color();
+            ctx.strokeStyle = objects[i].get_color();
+            
+            ctx.lineWidth = 1;
+            ctx.stroke();
+
+            ctx.font = text_size + " Arial";
+            ctx.textAlign = "center";
+            ctx.fillText(objects[i].get_content(), x, y + 6);
+
+        }
+
+    }
+
+    let check_approx = function(x, y) {
+        for (var i = 0; i < objects.length; i++) {
+            /**if (objects[i].type == "square") {
+                alert(Math.abs(objects[i].get_x() - x) < square_w && Math.abs(objects[i].get_y() - y) < square_h);
+                alert(objects[i].in(x,y))
+            }*/
+            if (objects[i].in(x, y)) {
+                if (!objects[i].selected) {
+                    read = true;
+                    document.getElementById('preview').placeholder = objects[i].get_content();
+                    objects[i].select();
+                    last_selected = i;
+                } else {
+                    if (objects[i].moveable) {
+                        read = false;
+                        document.getElementById('preview').placeholder = "Preview";
+                        objects[i].deselect();
+                    } else {
+                        read = false;
+                        objects[i].moveable = true;
+                        close_edit();
+                    }  
+                }
+            } else {
+                if (!event.shiftKey) {
+                    objects[i].deselect();
+                    objects[i].moveable = false;
+                }
+            }
+        }
+    }
+
+    let close_edit = function() {
+        document.getElementById('preview').value = "";
+        document.getElementById('preview').placeholder = "Preview";
+        document.getElementById('preview').disabled = true;
+        document.getElementById('preview').hidden = true;
+    }
+
+    let rename_node = function() {
+        con = translation_table(document.getElementById('preview').value);        
+        for (var i = 0; i < objects.length; i++) {
+            if (objects[i].selected) {
+                objects[i].content = con;
+                objects[i].deselect();
+                close_edit();
+            }
+        }
+        draw();
+    }
+
+    let get_closed_on_grid = function(c_x, c_y) {
+
+        c = document.getElementById('myCanvas');
+        step_size = c.height / griding;
+
+        x = c_x;
+        y = c_y;
+                
+        for (var pix = 0; pix < c.width; pix += step_size) {
+            if (Math.abs(c_x - pix) < step_size / 2) {
+                x = pix;
+                if (Math.abs(c_x - (pix + step_size)) < Math.abs(c_x - pix)) {
+                    x = pix + step_size;
+                }
+            }
+        }
+        for (var pix = 0; pix < c.height; pix += step_size) {
+            if (Math.abs(c_y - pix) < step_size / 2) {
+                y = pix;
+                if (Math.abs(c_y - (pix + step_size)) < Math.abs(c_y - pix)) {
+                    y = pix + step_size;
+                }
+            }
+        }
+
+        return (x,y)
+    }
+
+    
+    onmousemove = function(e){
+        document.getElementById('mouse').innerHTML = e.clientX + ", " + e.clientY;
+        config();
+        
+        selection = new Selection();
+
+        if (mode == 4) {
+            center = null;
+            for (var i = 0; i < objects.length; i++) {
+                if (objects[i].selected && i != last_selected) {
+                    selection.add(i, objects[i]);
+                }
+            }
+            selection.add(last_selected, objects[last_selected]);
+            if (!selection.valid()) {
+                for (var i = 0; i < objects.length; i++) {
+                    type = objects[i].type;
+                    if (!event.shiftKey) {
+                        if (objects[i].moveable) {
+                            if (grid_status) {
+                                x,y = get_closed_on_grid(e.clientX, e.clientY);
+                                objects[i].set_x(x);
+                                objects[i].set_y(y);
+                            } else {
+                                objects[i].set_x(e.clientX);
+                                objects[i].set_y(e.clientY);
+                            }
+                            draw();
+                        }
+                    }
+                }
+            } else {
+                if (!event.shiftKey) {
+                    close_edit();
+                    for (var i = 0; i < selection.elements.length; i++) {
+                        element = selection.elements[i];
+
+                        x_sel = e.clientX + element[1][1];
+                        y_sel = e.clientY + element[1][2];
+
+                        if (grid_status) {
+                                x,y = get_closed_on_grid(x_sel, y_sel);
+                                objects[element[0]].set_x(x);
+                                objects[element[0]].set_y(y);
+                        } else {
+                            objects[element[0]].set_x(x_sel);
+                            objects[element[0]].set_y(y_sel);
+                        }
+                    }
+                    draw();
+                }
+            }
+        } 
+        if (mode == 3 && d != null) {
+            lines.push(new Line(d, new Dot(e.clientX, e.clientY)));
+            draw();
+            lines.splice(lines.length - 1, 1);
+        }
+    }
+
+    first = true;
+    var d = null;
+    
+    document.getElementById('myCanvas').onmousedown = function(e){
+
+        x = e.clientX;
+        y = e.clientY;
+        
+        if (grid_status) {
+            x,y = get_closed_on_grid(e.clientX, e.clientY);
+        }
+
+        if (mode == 1) {
+            objects.push(new Circle(new Dot(x, y), objects.length));
+        } else if (mode == 2) {
+            objects.push(new Square(new Dot(x, y), objects.length, false));
+        } else if (mode == 5) {
+            objects.push(new Square(new Dot(x, y), objects.length, true));
+        } else if (mode == 3) {
+            if (first) {
+                d = new Dot(x, y);
+                for (var i = 0; i < objects.length; i++) {
+                    if (objects[i].in(e.clientX, e.clientY)) {
+                        d = objects[i].center;
+                    }
+                } 
+                first = false;
+            } else {
+                d2 = new Dot(x, y);
+                for (var i = 0; i < objects.length; i++) {
+                    if (objects[i].in(e.clientX, e.clientY)) {
+                        d2 = objects[i].center;
+                    }
+                }
+                if (d.x != d2.x || d.y != d2.y) {
+                    lines.push(new Line(d, d2));
+                }
+                d = null;
+                first = true;
+            }
+        } else {
+            check_approx(e.clientX, e.clientY);
+        }
+        draw();
+    }
+
+    document.onkeydown = function (e) {
+        e = e || window.event;
+        if (mode == 4 && !read) {
+            if (e.key == "Backspace") {
+                for (var i = 0; i < objects.length; i++) {
+                    if (objects[i].selected) {
+                        for (var j = 0; j < lines.length; j++) {
+                            if (lines[j].e == objects[i].center || lines[j].s == objects[i].center) {
+                                lines.splice(j, 1);        
+                            }
+                        }
+                        objects.splice(i, 1);
+                        draw();
+                    }
+                }
+            }
+        } else if (mode == 4 && read) {
+            document.getElementById('preview').focus();
+            document.getElementById('preview').disabled = false;
+            document.getElementById('preview').hidden = false;
+            if (e.key == "Enter") {
+                rename_node();
+            }
+        }
+        if (mode == 3) {
+            if (d != null) {
+                if (e.key == "Escape") {
+                    first = true;
+                    d = null;
+                    draw();
+                }
+            }
+        }
+    };
+
+    window.onresize = rescale_canvas;
+    window.onload = function(e) {
+        rescale_canvas();
+        draw();
+    }
+
+    </script>
+
+</body>
+
+</html>
