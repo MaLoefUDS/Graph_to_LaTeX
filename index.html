@@ -54,17 +54,17 @@
 
     <script>
 
-    mode = 1;
-    read = false;
-    grid_status = true;
-    objects = [];
-    lines = [];
-    griding = 20;
+    var mode = 1;
+    var read = false;
+    var grid_status = true;
+    var objects = [];
+    var lines = [];
+    var griding = 20;
     
-    text_size = "10px";
-    radius = 30;
-    square_w = 80;
-    square_h = 50;
+    var text_size = "10px";
+    var radius = 30;
+    var square_w = 80;
+    var square_h = 50;
 
     last_selected = 0;
 
@@ -72,22 +72,19 @@
         mode = param;
     }
 
-    let config = function(act) {
-        if (mode == 1) {
-            document.getElementById('selection').innerHTML = "Circle Selected";
-            document.getElementById('selection').style.color = "black";
-        } else if (mode == 2) {
-            document.getElementById('selection').innerHTML = "Square Selected";
-            document.getElementById('selection').style.color = "black";
-        } else if (mode == 3) {
-            document.getElementById('selection').innerHTML = "Line Selected";
-            document.getElementById('selection').style.color = "black";
-        } else if (mode == 5) {
-            document.getElementById('selection').innerHTML = "Text Selected";
-            document.getElementById('selection').style.color = "black";
-        } else {
-            document.getElementById('selection').innerHTML = "Edit Mode";
-            document.getElementById('selection').style.color = "red";
+    let config = function() {
+        var display = document.getElementById('selection');
+        switch(mode) {
+            case 4: display.style.color = "red"; break;
+            default: display.style.color = "black"; break;
+        }
+        switch(mode) {
+            case 1: display.innerHTML = "Circle Selected"; break;
+            case 2: display.innerHTML = "Square Selected"; break;
+            case 3: display.innerHTML = "Line Selected"; break;
+            case 4: display.innerHTML = "Edit Mode"; break;
+            case 5: display.innerHTML = "Text Selected"; break;
+            default: throw new Error("System in invalid mode"); break;
         }
     }
 
