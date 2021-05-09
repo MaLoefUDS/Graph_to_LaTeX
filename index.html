@@ -51,6 +51,7 @@
 
     <script type="text/javascript" src="objects.js"></script>
     <script type="text/javascript" src="helpers.js"></script>
+    <script type="text/javascript" src="grid_functions.js"></script>
 
     <script>
 
@@ -66,7 +67,7 @@
     var square_w = 80;
     var square_h = 50;
 
-    last_selected = 0;
+    var last_selected = 0;
 
     let set_mode = function(param) {
         mode = param;
@@ -119,38 +120,6 @@
         if (clear_objects) {
             objects = [];
             lines = [];
-        }
-    }
-
-    let grid = function() {
-        c = document.getElementById('myCanvas');
-        ctx = c.getContext('2d');
-
-        ratio = c.height / c.width;
-
-        ctx.strokeStyle = "#d0d0d0";
-
-        for (var i = 0; i < c.height; i = i + c.height / griding) {
-            ctx.beginPath();
-            ctx.moveTo(0, i);
-            ctx.lineTo(c.width, i)
-            ctx.stroke();
-        }
-        for (var i = 0; i < c.width; i = i + c.height / griding) {
-            ctx.beginPath();
-            ctx.moveTo(i, 0);
-            ctx.lineTo(i, c.height)
-            ctx.stroke();
-        }
-    }
-
-    let switch_grid_status = function() { grid_status = !grid_status; draw(); };
-
-    let regrid = function() {
-        for (var i = 0; i < objects[i].length; i++) {
-            var x,y = get_closed_on_grid(objects[i].get_x(), objects[i].get_y());
-            objects[i].set_x(x);
-            objects[i].set_y(y);
         }
     }
 
@@ -221,10 +190,6 @@
 
     let check_approx = function(x, y) {
         for (var i = 0; i < objects.length; i++) {
-            /**if (objects[i].type == "square") {
-                alert(Math.abs(objects[i].get_x() - x) < square_w && Math.abs(objects[i].get_y() - y) < square_h);
-                alert(objects[i].in(x,y))
-            }*/
             if (objects[i].in(x, y)) {
                 if (!objects[i].selected) {
                     read = true;
@@ -269,35 +234,6 @@
         }
         draw();
     }
-
-    let get_closed_on_grid = function(c_x, c_y) {
-
-        c = document.getElementById('myCanvas');
-        step_size = c.height / griding;
-
-        x = c_x;
-        y = c_y;
-                
-        for (var pix = 0; pix < c.width; pix += step_size) {
-            if (Math.abs(c_x - pix) < step_size / 2) {
-                x = pix;
-                if (Math.abs(c_x - (pix + step_size)) < Math.abs(c_x - pix)) {
-                    x = pix + step_size;
-                }
-            }
-        }
-        for (var pix = 0; pix < c.height; pix += step_size) {
-            if (Math.abs(c_y - pix) < step_size / 2) {
-                y = pix;
-                if (Math.abs(c_y - (pix + step_size)) < Math.abs(c_y - pix)) {
-                    y = pix + step_size;
-                }
-            }
-        }
-
-        return (x,y)
-    }
-
     
     onmousemove = function(e){
         document.getElementById('mouse').innerHTML = e.clientX + ", " + e.clientY;
