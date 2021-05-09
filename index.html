@@ -23,17 +23,17 @@
         <br>
 
         <b style="font-size: 10px;">Drawing Functionality:</b>
-        <button onclick="circ()"> Circle </button>
-        <button onclick="squr()"> Square </button>
-        <button onclick="text()"> Text </button>
-        <button onclick="line()"> Line </button>
+        <button onclick="set_mode(1)"> Circle </button>
+        <button onclick="set_mode(2)"> Square </button>
+        <button onclick="set_mode(5)"> Text </button>
+        <button onclick="set_mode(3)"> Line </button>
         
         <br>
         
         <b style="font-size: 10px;">Editing Functionality</b>
         <button onclick="switch_grid_status()"> Grid </button>
         <button onclick="clear_canvas(clear_objects=true)"> Clear </button>
-        <button onclick="edit()"> Edit </button>
+        <button onclick="set_mode(4)"> Edit </button>
         
         <br>
 
@@ -68,20 +68,8 @@
 
     last_selected = 0;
 
-    let circ = function() {
-        mode = 1;
-    }
-    let squr = function() {
-        mode = 2;
-    }
-    let line = function() {
-        mode = 3;
-    }
-    let edit = function() {
-        mode = 4;
-    }
-    let text = function() {
-        mode = 5;
+    let set_mode = function(param) {
+        mode = param;
     }
 
     let config = function(act) {
