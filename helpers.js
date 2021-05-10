@@ -189,6 +189,7 @@ let download = function(data, filename, type) {
  */
 let set_mode = function(param) {
     mode = param;
+    config();
 }
 
 /**
