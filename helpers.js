@@ -209,7 +209,7 @@ let config = function() {
     // set color
     switch(mode) {
         case 4: display.style.color = "red"; break;
-        default: display.style.color = main_object_color; break;
+        default: display.style.color = main_stroke_color; break;
     }
 
     // set content

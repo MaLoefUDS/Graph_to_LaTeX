@@ -10,7 +10,7 @@
 
 <body>
 
-    <canvas id="myCanvas" width=x height=y style="border:1px solid" + main_object_color> </canvas>
+    <canvas id="myCanvas" width=x height=y style="border:1px solid" + main_stroke_color> </canvas>
     
     <div style="margin-left: 10px;">
     
@@ -79,7 +79,7 @@
             s = lines[i].s;
             e = lines[i].e;
 
-            ctx.strokeStyle = main_object_color;
+            ctx.strokeStyle = main_stroke_color;
 
             // the line
             ctx.beginPath();
@@ -101,7 +101,7 @@
             // the "triangle"
             ctx.beginPath();
             ctx.arc(e.get_x(), e.get_y(), 5, 0, 2 * Math.PI);
-            ctx.fillStyle = main_object_color;
+            ctx.fillStyle = main_stroke_color;
             ctx.fill();
         }
 

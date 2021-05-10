@@ -43,5 +43,8 @@ var start_point = null;
 // the last selected object for multiple select
 var last_selected = 0;
 
-// the main object color
-var main_object_color = "black";
+// the object of most objects
+var main_stroke_color = "black";
+
+// the color of the grid
+var grid_color = "#d0d0d0";

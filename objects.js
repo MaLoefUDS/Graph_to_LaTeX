@@ -47,7 +47,7 @@ class Line {
     }
 
     get_color() {
-        return main_object_color;
+        return main_stroke_color;
     }
 }
 
