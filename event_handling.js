@@ -22,12 +22,15 @@ onmousemove = function(event){
         }
         selection.add(last_selected, objects[last_selected]);
 
-        // if at max 1 object is selected ... 
+        // if at max 1 object is selected and shift key is released ... 
         if (!selection.valid()) {
-            for (var i = 0; i < objects.length; i++) {
-                type = objects[i].type;
-                if (!event.shiftKey) {
+            if (!event.shiftKey) {                
+                
+                //  track the selected element to the mouse ... 
+                for (var i = 0; i < objects.length; i++) {
                     if (objects[i].moveable) {
+
+                        // is grid is activated, snap to grid
                         if (grid_status) {
                             x,y = get_closest_grid_point(event.clientX, event.clientY);                                
                             objects[i].set_x(x);
@@ -41,14 +44,23 @@ onmousemove = function(event){
                 }
             }
         } else {
+
+            // if multiple elements have been selected and shift key is released ...
             if (!event.shiftKey) {
+
+                // hide input field
                 close_edit();
+
+                // track elements on mouse
                 for (var i = 0; i < selection.elements.length; i++) {
                     element = selection.elements[i];
 
+                    // get current position of element in corralation to the holding point
+                    // of the selection
                     x_sel = event.clientX + element[1][1];
                     y_sel = event.clientY + element[1][2];
 
+                    // is grid is activated, snap to grid
                     if (grid_status) {
                         x,y = get_closest_grid_point(x_sel, y_sel);
                         objects[element[0]].set_x(x);
@@ -62,7 +74,11 @@ onmousemove = function(event){
             }
         }
     } 
-    if (mode == 3 && start_point != null) {
+
+    // if line mode is selected and starting point has been set already
+    if (mode == 3 && !init_line) {
+
+        // add line temporarely, draw and remove line again
         lines.push(new Line(start_point, new Dot(event.clientX, event.clientY)));
         draw();
         lines.splice(lines.length - 1, 1);
