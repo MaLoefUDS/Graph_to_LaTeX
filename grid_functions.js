@@ -1,4 +1,7 @@
 
+    /**
+     * function to draw the grid on the canvas
+     */
     let grid = function() {
         c = document.getElementById('myCanvas');
         ctx = c.getContext('2d');
@@ -21,8 +24,14 @@
         }
     }
 
+    /**
+     * turn the grid off / on
+     */
     let switch_grid_status = function() { grid_status = !grid_status; draw(); };
 
+    /**
+     * snap every object back on grid after rescaling the window or loading from files
+     */
     let regrid = function() {
         for (var i = 0; i < objects.length; i++) {
             x,y = get_closed_on_grid(objects[i].get_x(), objects[i].get_y());
@@ -33,22 +42,17 @@
             x,y = get_closed_on_grid(lines[i].s.get_x(), lines[i].s.get_y());
             lines[i].s.set_x(x);
             lines[i].s.set_y(y);
-            for (var j = 0; j < objects.length; j++) {
-                if (objects[j].in(x,y)) {
-                    lines[i].s = objects[j].center;
-                }
-            }   
             x,y = get_closed_on_grid(lines[i].e.get_x(), lines[i].e.get_y());
             lines[i].e.set_x(x);
             lines[i].e.set_y(y);
-            for (var j = 0; j < objects.length; j++) {
-                if (objects[j].in(x,y)) {
-                    lines[i].e = objects[j].center;
-                }
-            }   
         }
     }
 
+    /**
+     * get closed grid point for given coordinates
+     * @param {Number} c_x the x coordinate
+     * @param {Number} c_y the y coordinate
+     */
     let get_closed_on_grid = function(c_x, c_y) {
 
         c = document.getElementById('myCanvas');
