@@ -39,15 +39,23 @@
      * snap every object back on grid after rescaling the window or loading from files
      */
     let regrid = function() {
+
+        // for all objects: put object on grid
         for (var i = 0; i < objects.length; i++) {
             x,y = get_closed_on_grid(objects[i].get_x(), objects[i].get_y());
-            objects[i].center.set_x(x);
-            objects[i].center.set_y(y);
+            objects[i].set_x(x);
+            objects[i].set_y(y);
         }
+
+        // for all lines: put endpoints on grid
         for (var i = 0; i < lines.length; i++) {
+
+            // start point
             x,y = get_closed_on_grid(lines[i].s.get_x(), lines[i].s.get_y());
             lines[i].s.set_x(x);
             lines[i].s.set_y(y);
+
+            // end point
             x,y = get_closed_on_grid(lines[i].e.get_x(), lines[i].e.get_y());
             lines[i].e.set_x(x);
             lines[i].e.set_y(y);
