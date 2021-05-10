@@ -4,34 +4,34 @@
  * @returns the string with substitutions
  */
 let translation_table = function (input) {
-    input = input.replace("\\alpha", "\u03B1");
-    input = input.replace("\\beta", "\u03B2");
-    input = input.replace("\\gamma", "\u03B3");
-    input = input.replace("\\delta", "\u03B4");
-    input = input.replace("\\epsilon", "\u03B5");
-    input = input.replace("\\zeta", "\u03B6");
-    input = input.replace("\\eta", "\u03B7");
-    input = input.replace("\\theta", "\u03B8");
-    input = input.replace("\\iota", "\u03B9");
-    input = input.replace("\\kappa", "\u03BA");
-    input = input.replace("\\lambda", "\u03BB");
-    input = input.replace("\\mu", "\u03BC");
-    input = input.replace("\\nu", "\u03BD");
-    input = input.replace("\\xi", "\u03BE");
-    input = input.replace("\\omicron", "\u03BF");
-    input = input.replace("\\pi", "\u03C0");
-    input = input.replace("\\rho", "\u03C1");
-    input = input.replace("\\sigmaf", "\u03C2");
-    input = input.replace("\\sigma", "\u03C3");
-    input = input.replace("\\tau", "\u03C4");
-    input = input.replace("\\upsilon", "\u03C5");
-    input = input.replace("\\phi", "\u03C6");
-    input = input.replace("\\chi", "\u03C7");
-    input = input.replace("\\psi", "\u03C8");
-    input = input.replace("\\omega", "\u03C9");
-    input = input.replace("\\and", "\u2227");
-    input = input.replace("\\or", "\u2228");
-    input = input.replace("\\cdots", "\u22EF");
+    input = input.replace(".alpha", "\u03B1");
+    input = input.replace(".beta", "\u03B2");
+    input = input.replace(".gamma", "\u03B3");
+    input = input.replace(".delta", "\u03B4");
+    input = input.replace(".epsilon", "\u03B5");
+    input = input.replace(".zeta", "\u03B6");
+    input = input.replace(".eta", "\u03B7");
+    input = input.replace(".theta", "\u03B8");
+    input = input.replace(".iota", "\u03B9");
+    input = input.replace(".kappa", "\u03BA");
+    input = input.replace(".lambda", "\u03BB");
+    input = input.replace(".mu", "\u03BC");
+    input = input.replace(".nu", "\u03BD");
+    input = input.replace(".xi", "\u03BE");
+    input = input.replace(".omicron", "\u03BF");
+    input = input.replace(".pi", "\u03C0");
+    input = input.replace(".rho", "\u03C1");
+    input = input.replace(".sigmaf", "\u03C2");
+    input = input.replace(".sigma", "\u03C3");
+    input = input.replace(".tau", "\u03C4");
+    input = input.replace(".upsilon", "\u03C5");
+    input = input.replace(".phi", "\u03C6");
+    input = input.replace(".chi", "\u03C7");
+    input = input.replace(".psi", "\u03C8");
+    input = input.replace(".omega", "\u03C9");
+    input = input.replace(".and", "\u2227");
+    input = input.replace(".or", "\u2228");
+    input = input.replace(".cdots", "\u22EF");
     return input;
 }
 
