@@ -50,37 +50,43 @@ let safe = function() {
  * load graph from file
  */
 let load_from_json = function() {
+    
+    // get file handle from html 
     const input = document.querySelector('input[type="file"]');
     const file = input.files[0];
     
+    // open a reader to see the files content
     let reader = new FileReader();
     reader.readAsText(file);
 
     reader.onload = function() {
+        // parse read json
         content = JSON.parse(reader.result);
 
+        // seperate in objects and lines again
         lns = content['lns'];
         obj = content['obj'];
 
-        for (var i = 0; i < obj.length; i++) {
-            object = parse_object(obj[i]);
-            objects.push(object);
-        }
-        for (var i = 0; i < lns.length; i++) {
-            line = parse_line(lns[i]);
-            for (var j = 0; j < objects.length; j++) {
-                if (objects[j].in(line.s.x, line.s.y)) {
-                    line.s = objects[j].center;
+        // for all objects in file: parse
+        obj.map(elem => {
+            objects.push(parse_object(elem));
+        });
+
+        // for all lines in file: parse + attach end points to objects
+        lns.map(elem => {
+            line = parse_line(elem);
+            for (var i = 0; i < objects.length; i++) {
+                if (objects[i].in(line.s.x, line.s.y)) {
+                    line.s = objects[i].center;
                 }
-            }
-            for (var j = 0; j < objects.length; j++) {
-                if (objects[j].in(line.e.x, line.e.y)) {
-                    line.e = objects[j].center;
+                if (objects[i].in(line.e.x, line.e.y)) {
+                    line.e = objects[i].center;
                 }
             }
             lines.push(line);
-        }
-        
+        });
+
+        // if grid is activated, snap objects to grid
         if (grid_status) {
             regrid();
         }
