@@ -71,58 +71,6 @@
 
     <script>
 
-    let rescale_canvas = function() {
-        x = document.body.clientWidth;
-        y = document.body.clientHeight;
-
-        c = document.getElementById('myCanvas');
-        c.width = x;
-        c.height = y / 1.3;
-
-        document.body.style.marginLeft = 0;
-        document.body.style.marginRight = 0;
-        document.body.style.marginTop = 0;
-
-        if (grid_status) {
-            regrid();
-        }
-        draw();
-    }
-
-    function scale(op) {
-        if (op == "+") {
-            griding  -= 5;
-            radius   += 5;
-            square_h += 5;
-            square_w += 10;
-        } else {
-            griding  += 5;
-            radius   -= 5;
-            square_h -= 5;
-            square_w -= 10;
-        }
-        if (grid_status) {
-            regrid();
-        }
-        draw();
-    }
-
-    let clear_canvas = function(clear_objects) {
-        c = document.getElementById('myCanvas');
-        ctx = c.getContext('2d');
-        ctx.fillStyle = "#e0e0e0";
-        ctx.fillRect(0, 0, c.width, c.height);
-        
-        if (grid_status) {
-            grid();
-        }
-
-        if (clear_objects) {
-            objects = [];
-            lines = [];
-        }
-    }
-
     let draw = function() {
         
         clear_canvas(clear_objects=false);
