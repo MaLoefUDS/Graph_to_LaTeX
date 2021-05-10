@@ -4,6 +4,7 @@
     var objects = [];
     var lines = [];
     var griding = 20;
+    var prefix = "."
     
     var text_size = "12px";
     var radius = 30;
