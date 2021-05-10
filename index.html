@@ -162,7 +162,7 @@
                 bez_1_x = s.get_x() + x_diff * 1.5;
                 bez_1_y = s.get_y() - y_diff * 1.5;
                 bez_2_x = e.get_x() - x_diff * 2;
-                bez_2_y = e.get_y() - y_diff / 2;
+                bez_2_y = e.get_y() - y_diff / 8;
                 ctx.bezierCurveTo(bez_1_x, bez_1_y, bez_2_x, bez_2_y, e.get_x(), e.get_y())                
             } else {
                 ctx.lineTo(e.get_x(), e.get_y());
@@ -313,15 +313,12 @@
                 }
             }
         } 
-        if (mode == 3 && d != null) {
-            lines.push(new Line(d, new Dot(e.clientX, e.clientY)));
+        if (mode == 3 && start_point != null) {
+            lines.push(new Line(start_point, new Dot(e.clientX, e.clientY)));
             draw();
             lines.splice(lines.length - 1, 1);
         }
     }
-
-    var first = true;
-    var d = null;
     
     document.getElementById('myCanvas').onmousedown = function(e){
 
@@ -339,26 +336,26 @@
         } else if (mode == 5) {
             objects.push(new Square(new Dot(x, y), objects.length, true));
         } else if (mode == 3) {
-            if (first) {
-                d = new Dot(x, y);
+            if (init_line) {
+                start_point = new Dot(x, y);
                 for (var i = 0; i < objects.length; i++) {
                     if (objects[i].in(e.clientX, e.clientY)) {
-                        d = objects[i].center;
+                        start_point = objects[i].center;
                     }
                 } 
-                first = false;
+                init_line = false;
             } else {
-                d2 = new Dot(x, y);
+                end_point = new Dot(x, y);
                 for (var i = 0; i < objects.length; i++) {
                     if (objects[i].in(e.clientX, e.clientY)) {
-                        d2 = objects[i].center;
+                        end_point = objects[i].center;
                     }
                 }
-                if (d.x != d2.x || d.y != d2.y) {
-                    lines.push(new Line(d, d2));
+                if (start_point.x != end_point.x || start_point.y != end_point.y) {
+                    lines.push(new Line(start_point, end_point));
                 }
-                d = null;
-                first = true;
+                start_point = null;
+                init_line = true;
             }
         } else {
             check_approx(e.clientX, e.clientY);
@@ -391,10 +388,10 @@
             }
         }
         if (mode == 3) {
-            if (d != null) {
+            if (start_point != null) {
                 if (e.key == "Escape") {
-                    first = true;
-                    d = null;
+                    init_line = true;
+                    start_point = null;
                     draw();
                 }
             }

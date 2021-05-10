@@ -11,5 +11,7 @@
     var radius = 30;
     var square_w = 80;
     var square_h = 50;
+    var init_line = true;
+    var start_point = null;
 
     var last_selected = 0;
