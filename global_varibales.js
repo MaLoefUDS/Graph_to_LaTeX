@@ -1,6 +1,7 @@
     var mode = 1;
     var read = false;
     var grid_status = true;
+    var curve_status = true;
     var objects = [];
     var lines = [];
     var griding = 20;

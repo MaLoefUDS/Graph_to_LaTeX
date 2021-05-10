@@ -32,6 +32,7 @@
             <tr>
                 <th> <b style="font-size: 10px;">Editing Functionality:</b> </th>                
                 <th> <button onclick="switch_grid_status()"> Grid </button> </th>
+                <th> <button onclick="switch_curve_status()"> Curve </button> </th>
                 <th> <button onclick="clear_canvas(clear_objects=true)"> Clear </button> </th>                                    
                 <th> <button onclick="set_mode(4)"> Edit </button> </th>                
             </tr>
@@ -154,14 +155,14 @@
             // the line
             ctx.beginPath();
             ctx.moveTo(s.get_x(), s.get_y());
-            if (Math.abs(s.get_x() - e.get_x()) > document.getElementById('myCanvas').width / 100) {
-                x_diff = -(s.get_x() - e.get_x()) / 5;
+            if (curve_status) {
+                x_diff = (e.get_x() - s.get_x()) / 5;
                 y_diff = s.get_y() - e.get_y();
-                y_diff =  y_diff > 0 ? Math.abs(y_diff) : -Math.abs(y_diff);
-                bez_1_x = s.get_x() + x_diff;
-                bez_1_y = s.get_y() - y_diff;
-                bez_2_x = e.get_x() - x_diff;
-                bez_2_y = e.get_y() - y_diff;
+                y_diff =  y_diff > 0 ? Math.abs(y_diff) / 2 : -Math.abs(y_diff) / 2;
+                bez_1_x = s.get_x() + x_diff * 1.5;
+                bez_1_y = s.get_y() - y_diff * 1.5;
+                bez_2_x = e.get_x() - x_diff * 2;
+                bez_2_y = e.get_y() - y_diff / 2;
                 ctx.bezierCurveTo(bez_1_x, bez_1_y, bez_2_x, bez_2_y, e.get_x(), e.get_y())                
             } else {
                 ctx.lineTo(e.get_x(), e.get_y());
@@ -207,8 +208,9 @@
         }
     }
 
-    let draw_selfloop = function() {
-        console.log("test");
+    let switch_curve_status = function() { 
+        curve_status = !curve_status;
+        draw(); 
     };
 
     let check_approx = function(x, y) {
