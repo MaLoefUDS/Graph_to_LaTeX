@@ -1,17 +1,28 @@
+/**
+ * handling mouse movement
+ * @param {onmousemove} event the mouse movement event
+ */
 onmousemove = function(event){
+
+    // update mouse position element
     document.getElementById('mouse').innerHTML = event.clientX + ", " + event.clientY;
-    config();
     
+    // create potential new selection
     selection = new Selection();
 
+    // if in edit mode
     if (mode == 4) {
-        center = null;
+
+        // add selected elements to selection but last selected element last so that the 
+        // holdpoint is on the last selected object
         for (var i = 0; i < objects.length; i++) {
             if (objects[i].selected && i != last_selected) {
                 selection.add(i, objects[i]);
             }
         }
         selection.add(last_selected, objects[last_selected]);
+
+        // if at max 1 object is selected ... 
         if (!selection.valid()) {
             for (var i = 0; i < objects.length; i++) {
                 type = objects[i].type;
@@ -59,7 +70,7 @@ onmousemove = function(event){
 }
 
 /**
- * handline mouse click event
+ * handling mouse click event
  * @param {onmousedown} event the mouse click
  */
 document.getElementById('myCanvas').onmousedown = function(event){
@@ -117,7 +128,7 @@ document.getElementById('myCanvas').onmousedown = function(event){
     } else {
 
         // if edit mode, check if object is hit
-        check_approx(x, y);
+        check_approx(event);
     }
     draw();
 }
