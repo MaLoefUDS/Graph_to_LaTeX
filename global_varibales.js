@@ -23,16 +23,16 @@ var griding = 20;
 var prefix = "-";
 
 // size of text in objects
-var text_size = "12px";
+var text_size = "14px";
 
 // radius of circle
-var radius = 30;
+var radius = 40;
 
 // width of square
-var square_w = 80;
+var square_w = 100;
 
 // height of square
-var square_h = 50;
+var square_h = 60;
 
 // wether a new line has been started
 var init_line = true;
