@@ -20,31 +20,57 @@
         
         <input type="search" placeholder="Preview" id="preview" disabled="true" hidden="true">
 
+        <table style="text-align: left;">
+
+            <tr>
+                <th>
+                    <b style="font-size: 10px;">Drawing Functionality:</b>
+                </th>
+                <th>
+                    <button onclick="set_mode(1)"> Circle </button>
+                </th>
+                <th>
+                    <button onclick="set_mode(2)"> Square </button>
+                </th>
+                <th>
+                    <button onclick="set_mode(5)"> Text </button>
+                </th>
+                <th>
+                    <button onclick="set_mode(3)"> Line </button>
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    <b style="font-size: 10px;">Editing Functionality:</b>
+                </th>
+                <th>
+                    <button onclick="switch_grid_status()"> Grid </button>
+                </th>
+                <th>
+                    <button onclick="clear_canvas(clear_objects=true)"> Clear </button>
+                </th>
+                <th>
+                    <button onclick="set_mode(4)"> Edit </button>
+                </th>
+            </tr>
+
+        </table>
+        
         <br>
 
-        <b style="font-size: 10px;">Drawing Functionality:</b>
-        <button onclick="set_mode(1)"> Circle </button>
-        <button onclick="set_mode(2)"> Square </button>
-        <button onclick="set_mode(5)"> Text </button>
-        <button onclick="set_mode(3)"> Line </button>
-        
-        <br>
-        
-        <b style="font-size: 10px;">Editing Functionality</b>
-        <button onclick="switch_grid_status()"> Grid </button>
-        <button onclick="clear_canvas(clear_objects=true)"> Clear </button>
-        <button onclick="set_mode(4)"> Edit </button>
-        
+        <button onclick="safe()"> Safe Graph to File</button>
+
         <br>
 
-        <b style="font-size: 10px;">Storing Functionality</b>
-        <button onclick="safe()"> Safe </button>
-        <button onclick="load_from_json();"> Load </button>
+        <button onclick="load_from_json();"> Load Graph </button>
         <input type="file" value="Load">
         
         <br>
         
-        <h5 id="mouse"> 0,0 </h5>
+        <h5 id="mouse" hidden="true"> 0,0 </h5>
+        
+        <br>
+        
         <i style="color: #d0d0d0; font-size: 10px;">GtL (Beta) by @Maximilian L&ouml;ffler</i>
     
     </div>
