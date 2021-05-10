@@ -70,12 +70,15 @@
      */
     let get_closed_on_grid = function(c_x, c_y) {
 
+        // get canvas and calcuate the grid
         c = document.getElementById('myCanvas');
         step_size = c.height / griding;
 
+        // dublicate coordinates to preserve old and new version
         x = c_x;
         y = c_y;
                 
+        // iterate of width of canvas and get grid point closest to c_x
         for (var pix = 0; pix < c.width; pix += step_size) {
             if (Math.abs(c_x - pix) < step_size / 2) {
                 x = pix;
@@ -85,6 +88,7 @@
             }
         }
 
+        // iterate of height of canvas and get grid point closest to c_y
         for (var pix = 0; pix < c.height; pix += step_size) {
             if (Math.abs(c_y - pix) < step_size / 2) {
                 y = pix;
