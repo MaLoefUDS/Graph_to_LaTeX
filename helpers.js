@@ -140,9 +140,9 @@ let parse_object = function(input) {
 
 /**
  * download content to file
- * @param {*} data the content to download
- * @param {*} filename the name of the output file
- * @param {*} type the type of the output blob
+ * @param {String} data the content to download
+ * @param {String} filename the name of the output file
+ * @param {Optional} type the type of the output blob
  */
 let download = function(data, filename, type) {
     var file = new Blob([data], {type: type});
