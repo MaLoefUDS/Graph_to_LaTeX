@@ -9,7 +9,7 @@ let grid = function() {
     ctx = c.getContext('2d');
 
     // set line color to lightgray
-    ctx.strokeStyle = "#d0d0d0";
+    ctx.strokeStyle = grid_color;
 
     // draw horizontal lines
     for (var i = 0; i < c.height; i += c.height / griding) {
