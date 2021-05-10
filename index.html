@@ -154,7 +154,18 @@
             // the line
             ctx.beginPath();
             ctx.moveTo(s.get_x(), s.get_y());
-            ctx.lineTo(e.get_x(), e.get_y());
+            if (Math.abs(s.get_x() - e.get_x()) > document.getElementById('myCanvas').width / 100) {
+                x_diff = -(s.get_x() - e.get_x()) / 5;
+                y_diff = s.get_y() - e.get_y();
+                y_diff =  y_diff > 0 ? Math.abs(y_diff) : -Math.abs(y_diff);
+                bez_1_x = s.get_x() + x_diff;
+                bez_1_y = s.get_y() - y_diff;
+                bez_2_x = e.get_x() - x_diff;
+                bez_2_y = e.get_y() - y_diff;
+                ctx.bezierCurveTo(bez_1_x, bez_1_y, bez_2_x, bez_2_y, e.get_x(), e.get_y())                
+            } else {
+                ctx.lineTo(e.get_x(), e.get_y());
+            }
             ctx.stroke();
 
             // the "triangle"
@@ -193,10 +204,12 @@
             ctx.font = text_size + " Arial";
             ctx.textAlign = "center";
             ctx.fillText(objects[i].get_content(), x, y + 6);
-
         }
-
     }
+
+    let draw_selfloop = function() {
+        console.log("test");
+    };
 
     let check_approx = function(x, y) {
         for (var i = 0; i < objects.length; i++) {
