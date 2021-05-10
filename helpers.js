@@ -52,15 +52,25 @@ let load_from_json = function() {
         lns = content['lns'];
         obj = content['obj'];
 
-        for (var i = 0; i < lns.length; i++) {
-            line = parse_line(lns[i]);
-            lines.push(line);
-        }
         for (var i = 0; i < obj.length; i++) {
             object = parse_object(obj[i]);
             objects.push(object);
         }
-
+        for (var i = 0; i < lns.length; i++) {
+            line = parse_line(lns[i]);
+            for (var j = 0; j < objects.length; j++) {
+                if (objects[j].in(line.s.x, line.s.y)) {
+                    line.s = objects[j].center;
+                }
+            }
+            for (var j = 0; j < objects.length; j++) {
+                if (objects[j].in(line.e.x, line.e.y)) {
+                    line.e = objects[j].center;
+                }
+            }
+            lines.push(line);
+        }
+        
         if (grid_status) {
             regrid();
         }
