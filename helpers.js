@@ -60,6 +60,7 @@ let load_from_json = function() {
     reader.readAsText(file);
 
     reader.onload = function() {
+        
         // parse read json
         content = JSON.parse(reader.result);
 
