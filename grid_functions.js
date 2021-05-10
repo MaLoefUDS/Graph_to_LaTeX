@@ -3,19 +3,22 @@
      * function to draw the grid on the canvas
      */
     let grid = function() {
+
+        // load canvas
         c = document.getElementById('myCanvas');
         ctx = c.getContext('2d');
 
-        ratio = c.height / c.width;
-
+        // set line color to lightgray
         ctx.strokeStyle = "#d0d0d0";
 
-        for (var i = 0; i < c.height; i = i + c.height / griding) {
+        // draw horizontal lines
+        for (var i = 0; i < c.height; i += c.height / griding) {
             ctx.beginPath();
             ctx.moveTo(0, i);
             ctx.lineTo(c.width, i)
-            ctx.stroke();
+            ctx.stroke();            
         }
+        // draw vertical lines
         for (var i = 0; i < c.width; i = i + c.height / griding) {
             ctx.beginPath();
             ctx.moveTo(i, 0);
