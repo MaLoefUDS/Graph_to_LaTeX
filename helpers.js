@@ -275,8 +275,8 @@ let rescale_canvas = function() {
     draw();
 }
 
-function scale(op) {
-    if (op == "+") {
+function scale(operator) {
+    if (operator == "+") {
         griding  -= 5;
         radius   += 5;
         square_h += 5;
