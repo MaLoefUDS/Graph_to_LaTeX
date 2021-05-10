@@ -5,7 +5,7 @@
     var lines = [];
     var griding = 20;
     
-    var text_size = "10px";
+    var text_size = "12px";
     var radius = 30;
     var square_w = 80;
     var square_h = 50;
