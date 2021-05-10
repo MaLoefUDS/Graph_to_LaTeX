@@ -183,33 +183,48 @@ let download = function(data, filename, type) {
     }
 }
 
+/**
+ * setting the mode the system is in
+ * @param {Number} param the mode to set
+ */
 let set_mode = function(param) {
     mode = param;
 }
 
+/**
+ * invert curve status and redraw the canvas
+ */
 let switch_curve_status = function() { 
     curve_status = !curve_status;
     draw(); 
 };
 
+/**
+ * setting the "selected" menu text depending on the mode
+ */
 let config = function() {
     var display = document.getElementById('selection');
+
+    // set color
     switch(mode) {
         case 4: display.style.color = "red"; break;
         default: display.style.color = "black"; break;
     }
+
+    // set content
     switch(mode) {
         case 1: display.innerHTML = "Circle Selected"; break;
         case 2: display.innerHTML = "Square Selected"; break;
         case 3: display.innerHTML = "Line Selected"; break;
         case 4: display.innerHTML = "Edit Mode"; break;
         case 5: display.innerHTML = "Text Selected"; break;
-        default: throw new Error("System in invalid mode"); break;
+        default: throw new Error("System in invalid mode");
     }
 }
 
-
-
+/**
+ * close the input field used for changing node's content
+ */
 let close_edit = function() {
     document.getElementById('preview').value = "";
     document.getElementById('preview').placeholder = "Preview";
@@ -217,6 +232,9 @@ let close_edit = function() {
     document.getElementById('preview').hidden = true;
 }
 
+/**
+ * rename selected nodes to value in input field and redraw
+ */
 let rename_node = function() {
     con = translation_table(document.getElementById('preview').value);        
     for (var i = 0; i < objects.length; i++) {
@@ -229,26 +247,56 @@ let rename_node = function() {
     draw();
 }
 
+/**
+ * selects or deselects objects depending on a given point
+ * @param {Number} x the x coordinate of the point
+ * @param {Number} y the y coordinate of the point
+ */
 let check_approx = function(x, y) {
     for (var i = 0; i < objects.length; i++) {
+
+        // if object is hit by the click
         if (objects[i].in(x, y)) {
+
+            // if object is hit and not selects yet ...
             if (!objects[i].selected) {
+
+                // now waiting for user input (to rename the node)
                 read = true;
+
+                // display node's current content as a placeholder in the input field
                 document.getElementById('preview').placeholder = objects[i].get_content();
+
+                // select the object
                 objects[i].select();
+
+                // make the object the last most selected object
                 last_selected = i;
             } else {
-                if (objects[i].moveable) {
-                    read = false;
-                    document.getElementById('preview').placeholder = "Preview";
-                    objects[i].deselect();
-                } else {
-                    read = false;
+
+                // if object is hit but selected already but not moveable yet ...
+                if (!objects[i].moveable) {
+
+                    // make the object moveable 
                     objects[i].moveable = true;
+
+                    // not waiting for input anymore
+                    read = false;
                     close_edit();
+                } else {
+                    // if object is already moveable
+
+                    // deselect object 
+                    objects[i].deselect();
+
+                    // display node's current content as a placeholder in the input field
+                    document.getElementById('preview').placeholder = objects[i].get_content();
                 }  
             }
         } else {
+
+            // if object is missed AND shift key is not pressed deselect object
+            // (if shift is pressed keep the object selected to make multiple select possible)
             if (!event.shiftKey) {
                 objects[i].deselect();
                 objects[i].moveable = false;
@@ -257,14 +305,22 @@ let check_approx = function(x, y) {
     }
 }
 
+/**
+ * on window size update rescale the canvas object acording, snap objects on grid again
+ * and redraw 
+ */
 let rescale_canvas = function() {
+
+    // aquiring body format
     x = document.body.clientWidth;
     y = document.body.clientHeight;
 
+    // set canvas format accordingely
     c = document.getElementById('myCanvas');
     c.width = x;
     c.height = y / 1.3;
 
+    // set canvas margins
     document.body.style.marginLeft = 0;
     document.body.style.marginRight = 0;
     document.body.style.marginTop = 0;
@@ -275,6 +331,32 @@ let rescale_canvas = function() {
     draw();
 }
 
+/**
+ * clearing up the canvas (used before every draw)
+ * @param {Boolean} clear_objects wether to also permanently remove all objects
+ */
+let clear_canvas = function(clear_objects) {
+
+    // get canvas and fill it with uniform color
+    c = document.getElementById('myCanvas');
+    ctx = c.getContext('2d');
+    ctx.fillStyle = "#e0e0e0";
+    ctx.fillRect(0, 0, c.width, c.height);
+    
+    if (grid_status) {
+        grid();
+    }
+    
+    if (clear_objects) {
+        objects = [];
+        lines = [];
+    }
+}
+
+/**
+ * rescaling the canvas, including grid and objects and redraw
+ * @param {String} operator wether to scale up or down
+ */
 function scale(operator) {
     if (operator == "+") {
         griding  -= 5;
@@ -291,20 +373,4 @@ function scale(operator) {
         regrid();
     }
     draw();
-}
-
-let clear_canvas = function(clear_objects) {
-    c = document.getElementById('myCanvas');
-    ctx = c.getContext('2d');
-    ctx.fillStyle = "#e0e0e0";
-    ctx.fillRect(0, 0, c.width, c.height);
-    
-    if (grid_status) {
-        grid();
-    }
-
-    if (clear_objects) {
-        objects = [];
-        lines = [];
-    }
 }
