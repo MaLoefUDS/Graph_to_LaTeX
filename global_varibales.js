@@ -20,7 +20,7 @@ var lines = [];
 var griding = 20;
 
 // prefix for input translation e.g. -alpha
-var prefix = "-"
+var prefix = "-";
 
 // size of text in objects
 var text_size = "12px";
@@ -42,3 +42,6 @@ var start_point = null;
 
 // the last selected object for multiple select
 var last_selected = 0;
+
+// the main object color
+var main_object_color = "black";

@@ -47,7 +47,7 @@ class Line {
     }
 
     get_color() {
-        return "black";
+        return main_object_color;
     }
 }
 
