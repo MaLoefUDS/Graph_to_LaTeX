@@ -61,6 +61,10 @@ let load_from_json = function() {
             objects.push(object);
         }
 
+        if (grid_status) {
+            regrid();
+        }
+
         draw();
     };
 }
