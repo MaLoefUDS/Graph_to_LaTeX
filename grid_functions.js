@@ -32,6 +32,9 @@
      */
     let switch_grid_status = function() { 
         grid_status = !grid_status; 
+        if (grid_status) {
+            regrid();
+        }
         draw(); 
     };
 
