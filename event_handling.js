@@ -101,31 +101,52 @@ document.getElementById('myCanvas').onmousedown = function(event){
     draw();
 }
 
-document.onkeydown = function (event) {
+/**
+ * handling keyboard input
+ * @param {onkeydown} event the keyboard input event 
+ */
+document.onkeydown = function(event) {
+
+    // if in edit mode and no input expected (aka. moving a node)
     if (mode == 4 && !read) {
+
+        // if backspace is pressed
         if (event.key == "Backspace") {
+
+            // remove selected objects and lines attached
             for (var i = 0; i < objects.length; i++) {
                 if (objects[i].selected) {
+                    
+                    // remove object
+                    objects.splice(i, 1);
+
+                    // search attached lines and remove too
                     for (var j = 0; j < lines.length; j++) {
                         if (lines[j].e == objects[i].center || lines[j].s == objects[i].center) {
                             lines.splice(j, 1);        
                         }
                     }
-                    objects.splice(i, 1);
                     draw();
                 }
             }
         }
     } else if (mode == 4 && read) {
-        document.getElementById('preview').focus();
+        // if in edit mode and user input is expected, activate input field
+
+        // activate field
         document.getElementById('preview').disabled = false;
         document.getElementById('preview').hidden = false;
+        document.getElementById('preview').focus();
+
+        // on enter rename nodes
         if (event.key == "Enter") {
             rename_node();
         }
     }
     if (mode == 3) {
-        if (start_point != null) {
+
+        // if escape while drawing lines, stop
+        if (!init_line) {
             if (event.key == "Escape") {
                 init_line = true;
                 start_point = null;

@@ -241,9 +241,9 @@ let rename_node = function() {
         if (objects[i].selected) {
             objects[i].content = con;
             objects[i].deselect();
-            close_edit();
         }
     }
+    close_edit();
     draw();
 }
 
