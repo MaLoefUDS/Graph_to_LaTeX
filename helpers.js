@@ -182,3 +182,77 @@ let download = function(data, filename, type) {
         }, 0); 
     }
 }
+
+let set_mode = function(param) {
+    mode = param;
+}
+
+let switch_curve_status = function() { 
+    curve_status = !curve_status;
+    draw(); 
+};
+
+let config = function() {
+    var display = document.getElementById('selection');
+    switch(mode) {
+        case 4: display.style.color = "red"; break;
+        default: display.style.color = "black"; break;
+    }
+    switch(mode) {
+        case 1: display.innerHTML = "Circle Selected"; break;
+        case 2: display.innerHTML = "Square Selected"; break;
+        case 3: display.innerHTML = "Line Selected"; break;
+        case 4: display.innerHTML = "Edit Mode"; break;
+        case 5: display.innerHTML = "Text Selected"; break;
+        default: throw new Error("System in invalid mode"); break;
+    }
+}
+
+
+
+let close_edit = function() {
+    document.getElementById('preview').value = "";
+    document.getElementById('preview').placeholder = "Preview";
+    document.getElementById('preview').disabled = true;
+    document.getElementById('preview').hidden = true;
+}
+
+let rename_node = function() {
+    con = translation_table(document.getElementById('preview').value);        
+    for (var i = 0; i < objects.length; i++) {
+        if (objects[i].selected) {
+            objects[i].content = con;
+            objects[i].deselect();
+            close_edit();
+        }
+    }
+    draw();
+}
+
+let check_approx = function(x, y) {
+    for (var i = 0; i < objects.length; i++) {
+        if (objects[i].in(x, y)) {
+            if (!objects[i].selected) {
+                read = true;
+                document.getElementById('preview').placeholder = objects[i].get_content();
+                objects[i].select();
+                last_selected = i;
+            } else {
+                if (objects[i].moveable) {
+                    read = false;
+                    document.getElementById('preview').placeholder = "Preview";
+                    objects[i].deselect();
+                } else {
+                    read = false;
+                    objects[i].moveable = true;
+                    close_edit();
+                }  
+            }
+        } else {
+            if (!event.shiftKey) {
+                objects[i].deselect();
+                objects[i].moveable = false;
+            }
+        }
+    }
+}
