@@ -53,6 +53,17 @@
                     <button onclick="set_mode(4)"> Edit </button>
                 </th>
             </tr>
+            <tr>
+                <th>
+                    <b style="font-size: 10px;">Scaling:</b>
+                </th>
+                <th>
+                    <button onclick="scale('+')"> + </button>
+                </th>
+                <th>
+                    <button onclick="scale('-')"> - </button>
+                </th>
+            </tr>
 
         </table>
         
@@ -114,6 +125,24 @@
         document.body.style.marginRight = 0;
         document.body.style.marginTop = 0;
 
+        if (grid_status) {
+            regrid();
+        }
+        draw();
+    }
+
+    function scale(op) {
+        if (op == "+") {
+            griding  -= 5;
+            radius   += 5;
+            square_h += 5;
+            square_w += 10;
+        } else {
+            griding  += 5;
+            radius   -= 5;
+            square_h -= 5;
+            square_w -= 10;
+        }
         if (grid_status) {
             regrid();
         }
