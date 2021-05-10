@@ -133,7 +133,7 @@
 
             ctx.font = text_size + " Arial";
             ctx.textAlign = "center";
-            ctx.fillText(objects[i].get_content(), x, y + 6);
+            ctx.fillText(objects[i].get_content(), x, y + Number(text_size.replace('px', '') / 2));
         }
     }
 
