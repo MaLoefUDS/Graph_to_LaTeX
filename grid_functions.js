@@ -28,9 +28,12 @@
     }
 
     /**
-     * turn the grid off / on
+     * invert grid status and redraw the canvas
      */
-    let switch_grid_status = function() { grid_status = !grid_status; draw(); };
+    let switch_grid_status = function() { 
+        grid_status = !grid_status; 
+        draw(); 
+    };
 
     /**
      * snap every object back on grid after rescaling the window or loading from files
