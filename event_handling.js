@@ -58,15 +58,21 @@ onmousemove = function(event){
     }
 }
 
+/**
+ * handline mouse click event
+ * @param {onmousedown} event the mouse click
+ */
 document.getElementById('myCanvas').onmousedown = function(event){
 
     x = event.clientX;
     y = event.clientY;
     
+    // if grid is active snap clicked point to grid
     if (grid_status) {
-        x,y = get_closest_grid_point(event.clientX, event.clientY);
+        x,y = get_closest_grid_point(x, y);
     }
 
+    // create object depending on selected mode
     if (mode == 1) {
         objects.push(new Circle(new Dot(x, y), objects.length));
     } else if (mode == 2) {
@@ -74,29 +80,44 @@ document.getElementById('myCanvas').onmousedown = function(event){
     } else if (mode == 5) {
         objects.push(new Square(new Dot(x, y), objects.length, true));
     } else if (mode == 3) {
+        // for creating a line ...
+
+        // if line has not yet started
         if (init_line) {
             start_point = new Dot(x, y);
+
+            // if clicked point hits object attach line to object
             for (var i = 0; i < objects.length; i++) {
-                if (objects[i].in(event.clientX, event.clientY)) {
+                if (objects[i].in(x, y)) {
                     start_point = objects[i].center;
                 }
             } 
+
+            // line has started now
             init_line = false;
         } else {
             end_point = new Dot(x, y);
+
+            // attach end point to object if possible
             for (var i = 0; i < objects.length; i++) {
-                if (objects[i].in(event.clientX, event.clientY)) {
+                if (objects[i].in(x, y)) {
                     end_point = objects[i].center;
                 }
             }
+
+            // if start point is different from end point add line
             if (start_point.x != end_point.x || start_point.y != end_point.y) {
                 lines.push(new Line(start_point, end_point));
             }
+
+            // line has ended now
             start_point = null;
             init_line = true;
         }
     } else {
-        check_approx(event.clientX, event.clientY);
+
+        // if edit mode, check if object is hit
+        check_approx(x, y);
     }
     draw();
 }
