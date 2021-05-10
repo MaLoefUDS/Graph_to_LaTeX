@@ -255,9 +255,9 @@
                         y_sel = e.clientY + element[1][2];
 
                         if (grid_status) {
-                            x,y = get_closed_on_grid(e.clientX, e.clientY);
-                            objects[i].set_x(x);
-                            objects[i].set_y(y);
+                            x,y = get_closed_on_grid(x_sel, y_sel);
+                            objects[element[0]].set_x(x);
+                            objects[element[0]].set_y(y);
                         } else {
                             objects[element[0]].set_x(x_sel);
                             objects[element[0]].set_y(y_sel);
