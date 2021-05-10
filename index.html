@@ -234,7 +234,7 @@
                     if (!event.shiftKey) {
                         if (objects[i].moveable) {
                             if (grid_status) {
-                                x,y = get_closed_on_grid(e.clientX, e.clientY);                                
+                                x,y = get_closest_grid_point(e.clientX, e.clientY);                                
                                 objects[i].set_x(x);
                                 objects[i].set_y(y);
                             } else {
@@ -255,7 +255,7 @@
                         y_sel = e.clientY + element[1][2];
 
                         if (grid_status) {
-                            x,y = get_closed_on_grid(x_sel, y_sel);
+                            x,y = get_closest_grid_point(x_sel, y_sel);
                             objects[element[0]].set_x(x);
                             objects[element[0]].set_y(y);
                         } else {
@@ -283,7 +283,7 @@
         y = e.clientY;
         
         if (grid_status) {
-            x,y = get_closed_on_grid(e.clientX, e.clientY);
+            x,y = get_closest_grid_point(e.clientX, e.clientY);
         }
 
         if (mode == 1) {
