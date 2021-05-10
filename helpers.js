@@ -1,3 +1,8 @@
+/**
+ * replace words with ASCII representations for LaTeX
+ * @param {String} input 
+ * @returns the string with substitutions
+ */
 let translation_table = function (input) {
     input = input.replace("\\alpha", "\u03B1");
     input = input.replace("\\beta", "\u03B2");
@@ -30,7 +35,9 @@ let translation_table = function (input) {
     return input;
 }
 
-
+/**
+ * safe currect graph to file
+ */
 let safe = function() {
     let dict = {
         obj: objects,
@@ -39,6 +46,9 @@ let safe = function() {
     download(JSON.stringify(dict, null, 2), "GtL");
 }
 
+/**
+ * load graph from file
+ */
 let load_from_json = function() {
     const input = document.querySelector('input[type="file"]');
     const file = input.files[0];
@@ -79,10 +89,20 @@ let load_from_json = function() {
     };
 }
 
+/**
+ * parse a dot from json to object
+ * @param {String} input 
+ * @returns the parsed dot
+ */
 let parse_dot = function(input) {
     return new Dot(input["x"], input["y"]);
 }
 
+/**
+ * parse a line from json to object
+ * @param {String} input 
+ * @returns the parsed line
+ */
 let parse_line = function(input) {
     s = parse_dot(input["s"]);
     e = parse_dot(input["e"]);
@@ -93,6 +113,11 @@ let parse_line = function(input) {
     return line;
 }
 
+/**
+ * parse a object from json to object
+ * @param {String} input 
+ * @returns the parsed object
+ */
 let parse_object = function(input) {
     type = input["type"];
     content = input["content"];
@@ -113,6 +138,12 @@ let parse_object = function(input) {
     return o;
 }
 
+/**
+ * download content to file
+ * @param {*} data the content to download
+ * @param {*} filename the name of the output file
+ * @param {*} type the type of the output blob
+ */
 let download = function(data, filename, type) {
     var file = new Blob([data], {type: type});
     if (window.navigator.msSaveOrOpenBlob) {
