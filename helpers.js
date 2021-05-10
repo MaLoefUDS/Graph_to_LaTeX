@@ -250,8 +250,6 @@ let rename_node = function() {
 
 /**
  * selects or deselects objects depending on a given point
- * @param {Number} x the x coordinate of the point
- * @param {Number} y the y coordinate of the point
  * @param {onmousedown} event the mouse click event
  */
 let check_approx = function(event) {
