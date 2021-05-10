@@ -52,6 +52,7 @@
      * get closed grid point for given coordinates
      * @param {Number} c_x the x coordinate
      * @param {Number} c_y the y coordinate
+     * @returns coordinates on grid
      */
     let get_closed_on_grid = function(c_x, c_y) {
 
