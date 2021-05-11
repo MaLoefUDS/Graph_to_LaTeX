@@ -48,3 +48,6 @@ var main_stroke_color = "black";
 
 // the color of the grid
 var grid_color = "#d0d0d0";
+
+// selection color
+var selection_color = "#0000ff";

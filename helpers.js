@@ -210,7 +210,7 @@ let config = function() {
 
     // set color
     switch(mode) {
-        case 4: display.style.color = "red"; break;
+        case 4: display.style.color = selection_color; break;
         default: display.style.color = main_stroke_color; break;
     }
 

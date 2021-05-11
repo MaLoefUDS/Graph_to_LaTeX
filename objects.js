@@ -104,7 +104,7 @@ class Geometrics {
 
     get_color() {
         if (this.selected) {
-            return '#0000ff'
+            return selection_color;
         } else {
             return main_stroke_color;
         }
