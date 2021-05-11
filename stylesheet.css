@@ -1,0 +1,40 @@
+th {
+    background-color: #bbbbff;
+    border: 0px;
+    border-radius: 5px;
+    padding-left: 1em;
+    padding-right: 1em;
+    padding-top: 0.4em;
+    padding-bottom: 0.4em;
+    color: #000000;
+    cursor: pointer;
+    width: 6em;
+    font-size: 10px;
+    font-weight: 500;
+}
+
+body {
+    font-family: helvetica;
+}
+
+th:hover {
+    box-shadow: 0px 0px 30px white;
+    border-radius: 10px;
+}
+
+th.alternating_row {
+    background-color: #8888ff !important;
+}
+
+th.info {
+    background-color: burlywood !important;     
+}
+
+th.info_alternating_row {
+    background-color: rgb(165, 138, 103) !important;
+}
+
+a {
+    color: #d0d0d0;
+    text-decoration: none;
+}
