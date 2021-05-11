@@ -117,6 +117,7 @@ document.getElementById('myCanvas').onmousedown = function(event){
             for (var i = 0; i < objects.length; i++) {
                 if (objects[i].in(x, y)) {
                     start_point = objects[i].center;
+                    break;
                 }
             } 
 
@@ -129,6 +130,7 @@ document.getElementById('myCanvas').onmousedown = function(event){
             for (var i = 0; i < objects.length; i++) {
                 if (objects[i].in(x, y)) {
                     end_point = objects[i].center;
+                    break;
                 }
             }
 
