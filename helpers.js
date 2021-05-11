@@ -53,11 +53,15 @@ let translation_table = function (input) {
  * safe currect graph to file
  */
 let safe = function() {
+    download(toJSON(), "GtL");
+}
+
+let toJSON = function() {
     let dict = {
         obj: objects,
         lns: lines
     }
-    download(JSON.stringify(dict, null, 2), "GtL");
+    return JSON.stringify(dict, null, 2);
 }
 
 /**
