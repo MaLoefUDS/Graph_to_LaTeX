@@ -216,11 +216,11 @@ let config = function() {
 
     // set content
     switch(mode) {
-        case 1: display.innerHTML = "> Circle Selected"; break;
-        case 2: display.innerHTML = "> Square Selected"; break;
-        case 3: display.innerHTML = "> Line Selected"; break;
+        case 1: display.innerHTML = "> Circle Selected"; close_edit(); break;
+        case 2: display.innerHTML = "> Square Selected"; close_edit(); break;
+        case 3: display.innerHTML = "> Line Selected"; close_edit(); break;
         case 4: display.innerHTML = "> Edit Mode"; break;
-        case 5: display.innerHTML = "> Text Selected"; break;
+        case 5: display.innerHTML = "> Text Selected"; close_edit(); break;
         default: throw new Error("System in invalid mode");
     }
 }
