@@ -216,11 +216,11 @@ let config = function() {
 
     // set content
     switch(mode) {
-        case 1: display.innerHTML = "Circle Selected"; break;
-        case 2: display.innerHTML = "Square Selected"; break;
-        case 3: display.innerHTML = "Line Selected"; break;
-        case 4: display.innerHTML = "Edit Mode"; break;
-        case 5: display.innerHTML = "Text Selected"; break;
+        case 1: display.innerHTML = "> Circle Selected"; break;
+        case 2: display.innerHTML = "> Square Selected"; break;
+        case 3: display.innerHTML = "> Line Selected"; break;
+        case 4: display.innerHTML = "> Edit Mode"; break;
+        case 5: display.innerHTML = "> Text Selected"; break;
         default: throw new Error("System in invalid mode");
     }
 }
@@ -396,7 +396,6 @@ let light_dark_mode = function() {
         main_fill_color = "black"; 
         grid_color = "#1e1e1e";
         background_color = "#121212";
-        selection_color = "#2f2fff";       
 
         // rename button and switch into dark mode
         document.getElementById('l_d_switch').innerHTML = "Light Mode";
@@ -408,7 +407,6 @@ let light_dark_mode = function() {
         main_fill_color = "white"; 
         grid_color = "#d0d0d0";
         background_color = "#e0e0e0";
-        selection_color = "#0000ff";
 
         // rename button and switch into light mode
         document.getElementById('l_d_switch').innerHTML = "Dark Mode";
