@@ -41,7 +41,7 @@
                 <th onclick="scale(operator='+')"> + </th>
                 <th onclick="scale(operator='-')"> - </th>  
                 <th onclick="light_dark_mode()" id="l_d_switch"> Dark Mode </th>
-                <th> <img src="LaTeX.png" width="35px" onclick="alert('not yet implemented')"></th>
+                <th> <img src="LaTeX.png" width="35px" onclick="compile_latex(toJSON())"></th>
             </tr>
 
         </table>
@@ -61,7 +61,17 @@
         
         <br>
         
-        <i style="color: #d0d0d0; font-size: 10px;">GtL (Beta) by @Maximilian L&ouml;ffler</i>
+        <i style="color: #d0d0d0; font-size: 10px;">
+            GtL (Beta) by 
+                <a href="https://twitter.com/max_loeffler"> 
+                    @Maximilian L&ouml;ffler 
+                </a> & 
+                <a href="https://twitter.com/tintinmaster_">
+                    @Tim Schneider
+                </a>
+        </i>
+
+        <input id="latex_output" hidden="true"></input>
     
     </div>
 
@@ -204,6 +214,11 @@
 
         th.info_alternating_row {
             background-color: rgb(165, 138, 103) !important;
+        }
+
+        a {
+            color: #d0d0d0;
+            text-decoration: none;
         }
 
     </style>

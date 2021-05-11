@@ -429,3 +429,83 @@ let light_dark_mode = function() {
     config();
     draw();
 }
+
+let compile_latex = function(jsonString) {
+    json = JSON.parse(jsonString);
+
+    obj = json.obj;
+    lines = json.lns;
+    
+    var scale = 4;
+    var stretch = 5;
+    
+    // Start Latex
+    var latex = "";
+    latex += (
+        "\\begin{center}\n" +
+        "\\begin{tikzpicture}[scale=0.15]\n" +
+        "\\tikzstyle{every node}+=[inner sep=0pt]"
+    );
+    
+    // LINES
+    for (i=0; i < lines.length; i++) {
+        var sx = Math.round(lines[i].s.x) / 10;
+        var sy = -1 * Math.round(lines[i].s.y) / 10;
+        var ex = Math.round(lines[i].e.x) / 10;
+        var ey = -1 * Math.round(lines[i].e.y) / 10;
+        
+        latex += "\\draw "
+        latex += ("("+sx+", "+sy+") -- "+"("+ex+", "+ey+")")
+        latex += ";\n"
+    }
+    
+    // NODES
+    for (i=0; i < obj.length; i++) {
+        var x = Math.round(obj[i].center.x) / 10;
+        var y = Math.round(-1 * obj[i].center.y) / 10;
+        
+        // Zeichne Form nur, wenn kein Text
+        // check if circle or rectangle
+        if (obj[i].type == "circle") {
+            latex += "\\draw [black, fill=white] ";
+            latex += ("(" + x + ", " + y + ") circle (" + scale + ")");
+            latex += ";\n" //end line
+        } else if (obj[i].type == "square") {
+            if (obj[i].text == false) {
+                latex += "\\draw [black, fill=white] ";
+                lcorner = "(" + (x-stretch) + ", " + (y+scale) + ") ";
+                rcorner = "(" + (x+stretch) + ", " + (y-scale) + ") ";
+                latex += (lcorner + "rectangle " + rcorner);
+                latex += ";\n" //end line
+            }
+        } else {
+            alert("Etwas ist schiefgelaufen!")
+        }
+        
+        // check for text
+        var content = String(obj[i].content);
+        if (content.length > 0) {
+            //content.replace("\\", "\\\\")
+            latex += "\\draw "
+            if (content.includes("\\")) {
+                latex += ("(" + x + ", " + y + ") node " + "{$" + content + "$}");
+            } else {
+                latex += ("(" + x + ", " + y + ") node " + "{" + content + "}");
+            }
+            latex += ";\n"
+        }
+    }
+    
+    latex += (
+    "\\end{tikzpicture}\n" +
+    "\\end{center}");
+    
+    output = document.getElementById('latex_output');
+    output.hidden = false;
+    alert("LaTeX Code copied!")
+    output.value = latex;
+    output.select();
+    document.execCommand("copy");
+    output.hidden = true;
+    
+}
