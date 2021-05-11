@@ -20,7 +20,7 @@ var lines = [];
 var griding = 20;
 
 // prefix for input translation e.g. -alpha
-var prefix = "-";
+var prefix = "\\";
 
 // size of text in objects
 var text_size = "14px";
