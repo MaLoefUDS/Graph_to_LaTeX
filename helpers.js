@@ -90,6 +90,8 @@ let load_from_json = function() {
         // for all lines in file: parse + attach end points to objects
         lns.map(elem => {
             line = parse_line(elem);
+
+            // check endpoint falls on object
             for (var i = 0; i < objects.length; i++) {
                 if (objects[i].in(line.s.x, line.s.y)) {
                     line.s = objects[i].center;
