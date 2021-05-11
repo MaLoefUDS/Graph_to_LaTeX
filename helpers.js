@@ -346,7 +346,7 @@ let clear_canvas = function(clear_objects) {
     // get canvas and fill it with uniform color
     c = document.getElementById('myCanvas');
     ctx = c.getContext('2d');
-    ctx.fillStyle = "#e0e0e0";
+    ctx.fillStyle = background_color;
     ctx.fillRect(0, 0, c.width, c.height);
     
     if (grid_status) {

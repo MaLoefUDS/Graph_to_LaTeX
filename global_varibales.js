@@ -54,3 +54,6 @@ var grid_color = "#d0d0d0";
 
 // selection color
 var selection_color = "#0000ff";
+
+// background color of canvas
+var background_color = "#e0e0e0";
