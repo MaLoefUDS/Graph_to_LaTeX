@@ -383,26 +383,47 @@ function scale(operator) {
     draw();
 }
 
+/**
+ * switch between light and dark mode
+ */
 let light_dark_mode = function() {
-    if (dark_mode) {
+
+    // if light mode is currently activated ...
+    if (!dark_mode) {
+        
+        // change colors 
+        main_stroke_color = "#f0f0f0";
+        main_fill_color = "black"; 
+        grid_color = "#1e1e1e";
+        background_color = "#121212";
+        selection_color = "#2f2fff";       
+
+        // rename button and switch into dark mode
+        document.getElementById('l_d_switch').innerHTML = "Light Mode";
+        dark_mode = true;
+    } else {
+
+        // change colors
         main_stroke_color = "black";
         main_fill_color = "white"; 
         grid_color = "#d0d0d0";
         background_color = "#e0e0e0";
-        document.getElementById('l_m_switch').innerHTML = "Dark Mode";
+        selection_color = "#0000ff";
+
+        // rename button and switch into light mode
+        document.getElementById('l_d_switch').innerHTML = "Dark Mode";
         dark_mode = false;
-    } else {
-        main_stroke_color = "white";
-        main_fill_color = "black"; 
-        grid_color = "#1e1e1e";
-        background_color = "#121212";       
-        document.getElementById('l_m_switch').innerHTML = "Light Mode";
-        dark_mode = true;
     }
 
+    // set canvas bezel color
     document.getElementById('myCanvas').style.border = "1px solid " + main_stroke_color;
+
+    // set body background color
     document.body.style.backgroundColor = main_fill_color;
+
+    // set text color
     document.body.style.color = main_stroke_color;
+
     config();
     draw();
 }
