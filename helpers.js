@@ -438,7 +438,7 @@ let compile_latex = function(jsonString) {
     json = JSON.parse(jsonString);
 
     compilable_objects = json['obj'];
-    lines = json['lns'];
+    compilable_lines = json['lns'];
     
     // scaling values for the graph
     var scale = 4;
@@ -452,13 +452,15 @@ let compile_latex = function(jsonString) {
     );
     
     // compile all lines
-    for (var i = 0; i < lines.length; i++) {
+    for (var i = 0; i < compilable_lines.length; i++) {
+
+        line = compilable_lines[i];
 
         // calculate positions of endpoints on tikz plane
-        var start_x = lines[i].s.x / 10;
-        var start_y = -1 * lines[i].s.y / 10;
-        var end_x = lines[i].e.x / 10;
-        var end_y = -1 * lines[i].e.y / 10;
+        var start_x = line.s.x / 10;
+        var start_y = -1 * line.s.y / 10;
+        var end_x = line.e.x / 10;
+        var end_y = -1 * line.e.y / 10;
         
         // add line to LaTeX code
         tex_code += "\\draw ";
