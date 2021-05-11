@@ -57,3 +57,6 @@ var selection_color = "#0000ff";
 
 // background color of canvas
 var background_color = "#e0e0e0";
+
+// switch variable for light / dark mode
+var dark_mode = false;

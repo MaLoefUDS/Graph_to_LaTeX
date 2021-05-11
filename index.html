@@ -39,7 +39,8 @@
             <tr>
                 <th> <b style="font-size: 10px;">Scaling:</b> </th>
                 <th> <button onclick="scale(operator='+')"> + </button> </th>
-                <th> <button onclick="scale(operator='-')"> - </button> </th>                
+                <th> <button onclick="scale(operator='-')"> - </button> </th>  
+                <th> <button onclick="light_dark_mode()" id="l_m_switch"> Dark Mode </button> </th>
             </tr>
 
         </table>
@@ -143,6 +144,7 @@
         config();
         document.getElementById('myCanvas').style.border = "1px solid " + main_stroke_color;
         document.body.style.backgroundColor = main_fill_color;
+        document.body.style.color = main_stroke_color;
         draw();
     }
 

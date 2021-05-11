@@ -323,7 +323,7 @@ let rescale_canvas = function() {
 
     // set canvas format accordingely
     c = document.getElementById('myCanvas');
-    c.width = x;
+    c.width = x / 1.001;
     c.height = y / 1.3;
 
     // set canvas margins
@@ -380,5 +380,29 @@ function scale(operator) {
     if (grid_status) {
         regrid();
     }
+    draw();
+}
+
+let light_dark_mode = function() {
+    if (dark_mode) {
+        main_stroke_color = "black";
+        main_fill_color = "white"; 
+        grid_color = "#d0d0d0";
+        background_color = "#e0e0e0";
+        document.getElementById('l_m_switch').innerHTML = "Dark Mode";
+        dark_mode = false;
+    } else {
+        main_stroke_color = "white";
+        main_fill_color = "black"; 
+        grid_color = "#1e1e1e";
+        background_color = "#121212";       
+        document.getElementById('l_m_switch').innerHTML = "Light Mode";
+        dark_mode = true;
+    }
+
+    document.getElementById('myCanvas').style.border = "1px solid " + main_stroke_color;
+    document.body.style.backgroundColor = main_fill_color;
+    document.body.style.color = main_stroke_color;
+    config();
     draw();
 }
