@@ -88,6 +88,7 @@ let get_closest_grid_point = function(c_x, c_y) {
             if (Math.abs(c_x - (pix + step_size)) < Math.abs(c_x - pix)) {
                 x = pix + step_size;
             }
+            break;
         }
     }
 
@@ -98,6 +99,7 @@ let get_closest_grid_point = function(c_x, c_y) {
             if (Math.abs(c_y - (pix + step_size)) < Math.abs(c_y - pix)) {
                 y = pix + step_size;
             }
+            break;
         }
     }
 
