@@ -8,9 +8,9 @@
 
 </head>
 
-<body>
+<body style="color: solid" + main_stroke_color>
 
-    <canvas id="myCanvas" width=x height=y style="border:1px solid" + main_stroke_color> </canvas>
+    <canvas id="myCanvas" width=x height=y> </canvas>
     
     <div style="margin-left: 10px;">
     
@@ -114,13 +114,13 @@
             if (type == "circle") {
                 ctx.beginPath();
                 ctx.arc(x, y, radius, 0, 2 * Math.PI);
-                ctx.fillStyle = "white";
+                ctx.fillStyle = main_fill_color;
                 ctx.fill();
             } else if (type == "square") {
                 if (!objects[i].is_text()) {
                     ctx.beginPath();
                     ctx.rect(x - square_w / 2, y - square_h / 2, square_w, square_h);
-                    ctx.fillStyle = "white";
+                    ctx.fillStyle = main_fill_color;
                     ctx.fill();
                 } 
             }
@@ -141,6 +141,8 @@
     window.onload = function(event) {
         rescale_canvas();
         config();
+        document.getElementById('myCanvas').style.border = "1px solid " + main_stroke_color;
+        document.body.style.backgroundColor = main_fill_color;
         draw();
     }
 

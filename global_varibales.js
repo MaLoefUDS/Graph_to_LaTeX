@@ -46,6 +46,9 @@ var last_selected = 0;
 // the object of most objects
 var main_stroke_color = "black";
 
+// body and fill color
+var main_fill_color = "white"; 
+
 // the color of the grid
 var grid_color = "#d0d0d0";
 
