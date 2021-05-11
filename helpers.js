@@ -430,82 +430,96 @@ let light_dark_mode = function() {
     draw();
 }
 
+/**
+ * compile json of objects and lines to LaTeX (tikz)
+ * @param {String} jsonString the string to compile
+ */
 let compile_latex = function(jsonString) {
     json = JSON.parse(jsonString);
 
-    obj = json.obj;
-    lines = json.lns;
+    compilable_objects = json['obj'];
+    lines = json['lns'];
     
+    // scaling values for the graph
     var scale = 4;
     var stretch = 5;
     
-    // Start Latex
-    var latex = "";
-    latex += (
+    // tikz header
+    var tex_code = (
         "\\begin{center}\n" +
         "\\begin{tikzpicture}[scale=0.15]\n" +
         "\\tikzstyle{every node}+=[inner sep=0pt]"
     );
     
-    // LINES
-    for (i=0; i < lines.length; i++) {
-        var sx = Math.round(lines[i].s.x) / 10;
-        var sy = -1 * Math.round(lines[i].s.y) / 10;
-        var ex = Math.round(lines[i].e.x) / 10;
-        var ey = -1 * Math.round(lines[i].e.y) / 10;
+    // compile all lines
+    for (var i = 0; i < lines.length; i++) {
+
+        // calculate positions of endpoints on tikz plane
+        var start_x = lines[i].s.x / 10;
+        var start_y = -1 * lines[i].s.y / 10;
+        var end_x = lines[i].e.x / 10;
+        var end_y = -1 * lines[i].e.y / 10;
         
-        latex += "\\draw "
-        latex += ("("+sx+", "+sy+") -- "+"("+ex+", "+ey+")")
-        latex += ";\n"
+        // add line to LaTeX code
+        tex_code += "\\draw ";
+        tex_code += ("(" + start_x + ", " + start_y + ") -- (" + end_x + ", " + end_y + ")");
+        tex_code += ";\n";
     }
     
-    // NODES
-    for (i=0; i < obj.length; i++) {
-        var x = Math.round(obj[i].center.x) / 10;
-        var y = Math.round(-1 * obj[i].center.y) / 10;
+    // compile all objects
+    for (var i = 0; i < compilable_objects.length; i++) {
+
+        // calculate center of object on tikz place
+        current_object = compilable_objects[i];
+        var x = Math.round(current_object.center.x) / 10;
+        var y = Math.round(-1 * current_object.center.y) / 10;
         
-        // Zeichne Form nur, wenn kein Text
-        // check if circle or rectangle
-        if (obj[i].type == "circle") {
-            latex += "\\draw [black, fill=white] ";
-            latex += ("(" + x + ", " + y + ") circle (" + scale + ")");
-            latex += ";\n" //end line
-        } else if (obj[i].type == "square") {
-            if (obj[i].text == false) {
-                latex += "\\draw [black, fill=white] ";
-                lcorner = "(" + (x-stretch) + ", " + (y+scale) + ") ";
-                rcorner = "(" + (x+stretch) + ", " + (y-scale) + ") ";
-                latex += (lcorner + "rectangle " + rcorner);
-                latex += ";\n" //end line
+        if (current_object.type == "circle") {
+
+            // add circle to LaTeX code
+            tex_code += "\\draw [black, fill=white] ";
+            tex_code += ("(" + x + ", " + y + ") circle (" + scale + ")");
+            tex_code += ";\n" //end line
+        } else if (current_object.type == "square") {
+
+            // if real square object
+            if (!current_object.text) {
+                tex_code += "\\draw [black, fill=white] ";
+                lcorner = "(" + (x - stretch) + ", " + (y + scale) + ") ";
+                rcorner = "(" + (x + stretch) + ", " + (y - scale) + ") ";
+                tex_code += (lcorner + "rectangle " + rcorner);
+                tex_code += ";\n" //end line
             }
-        } else {
-            alert("Etwas ist schiefgelaufen!")
-        }
+        } else throw new Error('invalid object type');
         
-        // check for text
-        var content = String(obj[i].content);
-        if (content.length > 0) {
-            //content.replace("\\", "\\\\")
-            latex += "\\draw "
-            if (content.includes("\\")) {
-                latex += ("(" + x + ", " + y + ") node " + "{$" + content + "$}");
-            } else {
-                latex += ("(" + x + ", " + y + ") node " + "{" + content + "}");
-            }
-            latex += ";\n"
+        // if there is content
+        object_content = String(current_object.content);
+        if (object_content.length) {
+
+            // add content to object and place $ brackets around math terms
+            tex_code += "\\draw "
+            brackets = object_content.includes("\\") ? ["{$", "$}"] : ["{", "}"];
+            tex_code += ("(" + x + ", " + y + ") node " + brackets[0] + object_content + brackets[1]);
+            tex_code += ";\n"
         }
     }
     
-    latex += (
-    "\\end{tikzpicture}\n" +
-    "\\end{center}");
+    // tikz footer
+    tex_code += (
+        "\\end{tikzpicture}\n" +
+        "\\end{center}"
+    );
     
+    // copy LaTeX code to clipboard by putting it into an invisible input field temporarely
     output = document.getElementById('latex_output');
+
     output.hidden = false;
-    alert("LaTeX Code copied!")
-    output.value = latex;
+    output.value = tex_code;
+    
     output.select();
     document.execCommand("copy");
+    
     output.hidden = true;
     
+    alert("LaTeX Code copied!\nMake sure to include the tikz library!")
 }
