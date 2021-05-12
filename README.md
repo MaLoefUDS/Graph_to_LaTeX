@@ -10,6 +10,8 @@ Start creating your Graph. Buttons under **Drawing Functionality** provide you w
 
 ![creating a graph](https://github.com/MaLoefUDS/Graph_to_LaTeX/blob/main/demo/Screenshot2.png "creating a graph")
 
+When you are done you can export your Graph to a file using the `Safe Graph to File` button, or click the LaTeX button to copy the LaTeX code of your Graph directly to your clipboard!
+
 ## Setup
 
 Include the tikz library in your .tex file 
@@ -17,3 +19,7 @@ Include the tikz library in your .tex file
 ```latex
 \usepackage{tikz}
 ```
+
+Now you can just paste your LaTeX code in. The result should look as follows:
+
+![graph in latex](https://github.com/MaLoefUDS/Graph_to_LaTeX/blob/main/demo/Screenshot3.png "graph in latex")
