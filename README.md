@@ -26,6 +26,6 @@ Now you can just paste your LaTeX code in. The result should look as follows:
 
 ## Clarifications
 
-The code base is constantly maintained so make sure to pull changed from time to time to get the best possible experience. If you found some unknown bugs make sure to report them to s8amloef@stud.uni-saarland.de.
+The code base is constantly maintained so make sure to pull changes from time to time to get the best possible experience. If you found some unknown bugs make sure to report them to s8amloef@stud.uni-saarland.de.
 
 **Thank you for using GtL!**
