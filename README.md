@@ -23,3 +23,9 @@ Include the tikz library in your .tex file
 Now you can just paste your LaTeX code in. The result should look as follows:
 
 ![graph in latex](https://github.com/MaLoefUDS/Graph_to_LaTeX/blob/main/demo/Screenshot3.png "graph in latex")
+
+## Clarifications
+
+The code base is constantly maintained so make sure to pull changed from time to time to get the best possible experience. If you found some unknown bugs make sure to report them to [Maximilian Löffler](mailto:s8maloef@stud.uni-saarland.de?subject=[GitHub] Source Han Sans). 
+
+Thank you for using GtL!
