@@ -243,7 +243,7 @@ let close_edit = function() {
  * rename selected nodes to value in input field and redraw
  */
 let rename_node = function() {
-    con = translation_table(document.getElementById('preview').value);        
+    con = document.getElementById('preview').value;        
     for (var i = 0; i < objects.length; i++) {
         if (objects[i].selected) {
             objects[i].content = con;
