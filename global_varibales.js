@@ -8,7 +8,7 @@ var read = false;
 var grid_status = true;
 
 // true = display lines curved
-var curve_status = true;
+var curve_status = false;
 
 // list of objects
 var objects = [];
