@@ -207,3 +207,27 @@ class Selection {
         return this.elements.length > 1;
     }
 }
+
+class simpleVector {
+
+    constructor(dot) {
+        this.x = dot.x;
+        this.y = dot.y;
+    }
+
+    normalize() {
+        return Math.sqrt( Math.pow(this.x, 2) + Math.pow(this.y, 2) );
+    }
+
+    add(vec) {
+        return new simpleVector(new Dot(this.x + vec.x, this.y + vec.y));
+    }
+
+    sub(vec) {
+        return new simpleVector(new Dot(this.x - vec.x, this.y - vec.y));
+    }
+
+    multiply(fac) {
+        return new simpleVector(new Dot(this.x * fac, this.y * fac));
+    }
+}
