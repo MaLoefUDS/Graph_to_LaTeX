@@ -125,7 +125,10 @@
 
             // draw dot at the end of the line
             ctx.beginPath();
-            ctx.arc(e.get_x(), e.get_y(), 5, 0, 2 * Math.PI);
+
+            var arr_endpoint = lines[i].calculate_arrow_endpoint();
+                
+            ctx.arc(arr_endpoint.x, arr_endpoint.y, 5, 0, 2 * Math.PI);
             ctx.fillStyle = main_stroke_color;
             ctx.fill();
         }
