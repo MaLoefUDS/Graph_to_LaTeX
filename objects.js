@@ -172,8 +172,8 @@ class Square extends Geometrics {
         this.text = text;
     }
 
-    static width = 130;
-    static height = Square.width * 0.6;
+    static height = Circle.radius * 2;
+    static width = Square.height * 1.66;
 
     is_text() {
         return this.text;
