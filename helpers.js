@@ -372,17 +372,15 @@ function scale(operator) {
         if (griding > 5) {
             griding  -= 5;
             Circle.radius += 5;
-            Square.width += 12;
-            Square.height = Square.width * 0.6;
             text_size = String(Number(text_size.replace('px', '')) + 1.5) + 'px';
         }
     } else {
         griding  += 5;
         Circle.radius -= 5;
-        Square.width -= 12;
-        Square.height = Square.width * 0.6;
         text_size = String(Number(text_size.replace('px', '')) - 1.5) + 'px';
     }
+    Square.height = Circle.radius * 2;
+    Square.width  = Square.height * 1.66;
     if (grid_status) {
         regrid();
     }
@@ -443,8 +441,8 @@ let compile_latex = function(jsonString) {
     compilable_lines = json['lns'];
     
     // scaling values for the graph
-    var scale = 4;
-    var stretch = 5;
+    var radius = Circle.radius / 10;
+    var square_width = radius * 1.66;
     
     // tikz header
     var tex_code = (
@@ -482,15 +480,15 @@ let compile_latex = function(jsonString) {
 
             // add circle to LaTeX code
             tex_code += "\\draw [black, fill=white] ";
-            tex_code += ("(" + x + ", " + y + ") circle (" + scale + ")");
+            tex_code += ("(" + x + ", " + y + ") circle (" + radius + ")");
             tex_code += ";\n" //end line
         } else if (current_object.type == "square") {
 
             // if real square object
             if (!current_object.text) {
                 tex_code += "\\draw [black, fill=white] ";
-                lcorner = "(" + (x - stretch) + ", " + (y + scale) + ") ";
-                rcorner = "(" + (x + stretch) + ", " + (y - scale) + ") ";
+                lcorner = "(" + (x - square_width) + ", " + (y + radius) + ") ";
+                rcorner = "(" + (x + square_width) + ", " + (y - radius) + ") ";
                 tex_code += (lcorner + "rectangle " + rcorner);
                 tex_code += ";\n" //end line
             }
