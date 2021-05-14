@@ -369,15 +369,17 @@ let clear_canvas = function(clear_objects) {
  */
 function scale(operator) {
     if (operator == "+") {
-        griding  -= 5;
-        Circle.radius += 5;
-        Square.width += 5;
-        Square.height = Square.width * 0.6;
-        text_size = String(Number(text_size.replace('px', '')) + 1.5) + 'px';
+        if (griding > 5) {
+            griding  -= 5;
+            Circle.radius += 5;
+            Square.width += 12;
+            Square.height = Square.width * 0.6;
+            text_size = String(Number(text_size.replace('px', '')) + 1.5) + 'px';
+        }
     } else {
         griding  += 5;
         Circle.radius -= 5;
-        Square.width -= 5;
+        Square.width -= 12;
         Square.height = Square.width * 0.6;
         text_size = String(Number(text_size.replace('px', '')) - 1.5) + 'px';
     }
