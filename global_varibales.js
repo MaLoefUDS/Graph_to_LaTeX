@@ -25,12 +25,6 @@ var prefix = "\\";
 // size of text in objects
 var text_size = "14px";
 
-// width of square
-var square_w = 100;
-
-// height of square
-var square_h = 60;
-
 // wether a new line has been started
 var init_line = true;
 

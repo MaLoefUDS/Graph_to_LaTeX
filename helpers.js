@@ -371,14 +371,12 @@ function scale(operator) {
     if (operator == "+") {
         griding  -= 5;
         Circle.radius += 5;
-        square_h += 5;
-        square_w += 10;
+        Square.width += 5;
         text_size = String(Number(text_size.replace('px', '')) + 1.5) + 'px';
     } else {
         griding  += 5;
         Circle.radius -= 5;
-        square_h -= 5;
-        square_w -= 10;
+        Square.width -= 5;
         text_size = String(Number(text_size.replace('px', '')) - 1.5) + 'px';
     }
     if (grid_status) {

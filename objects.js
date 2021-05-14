@@ -67,7 +67,7 @@ class Line {
             } else if (this.connection.type == "square") {
                 for (var i = 0; i < v.normalize(); i++) {                    
                     var ex_point = s_vec.add(direction_vector.multiply(i));
-                    if (Math.abs(ex_point.x - this.e.x) < square_w / 2 && Math.abs(ex_point.y - this.e.y) < square_h / 2) {
+                    if (Math.abs(ex_point.x - this.e.x) < Square.width / 2 && Math.abs(ex_point.y - this.e.y) < Square.height / 2) {
                         return ex_point;
                     }
                 }
@@ -172,6 +172,9 @@ class Square extends Geometrics {
         this.text = text;
     }
 
+    static width = 100;
+    static height = Square.width * 0.6;
+
     is_text() {
         return this.text;
     }
@@ -184,9 +187,9 @@ class Square extends Geometrics {
      */
     in(x,y) {
         if (this.text) {
-            return (Math.abs(this.get_x() - x) < square_w / 3) && (Math.abs(this.get_y() - y) < square_h / 4);    
+            return (Math.abs(this.get_x() - x) < Square.width / 3) && (Math.abs(this.get_y() - y) < Square.height / 4);    
         } else {
-            return ((Math.abs(this.get_x() - x) < square_w) && (Math.abs(this.get_y() - y) < square_h));
+            return ((Math.abs(this.get_x() - x) < Square.width) && (Math.abs(this.get_y() - y) < Square.height));
         }
     }
 }
