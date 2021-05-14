@@ -137,6 +137,7 @@ let parse_line = function(input) {
     line.selected = input["selected"];
     line.moveable = input["moveable"];
     line.content = input["content"];
+    line.connection = parse_object(input["connection"]);
     return line;
 }
 
@@ -160,7 +161,6 @@ let parse_object = function(input) {
     
     o.selected = input["selected"];
     o.moveable = input["moveable"];
-    console.log(o);
     
     return o;
 }
@@ -370,13 +370,13 @@ let clear_canvas = function(clear_objects) {
 function scale(operator) {
     if (operator == "+") {
         griding  -= 5;
-        radius   += 5;
+        Circle.radius += 5;
         square_h += 5;
         square_w += 10;
         text_size = String(Number(text_size.replace('px', '')) + 1.5) + 'px';
     } else {
         griding  += 5;
-        radius   -= 5;
+        Circle.radius -= 5;
         square_h -= 5;
         square_w -= 10;
         text_size = String(Number(text_size.replace('px', '')) - 1.5) + 'px';

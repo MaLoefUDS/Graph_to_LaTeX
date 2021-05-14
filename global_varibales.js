@@ -25,9 +25,6 @@ var prefix = "\\";
 // size of text in objects
 var text_size = "14px";
 
-// radius of circle
-var radius = 40;
-
 // width of square
 var square_w = 100;
 

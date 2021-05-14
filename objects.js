@@ -61,7 +61,7 @@ class Line {
             var direction_vector = v.multiply(1 / v.normalize());
             
             if (this.connection.type == "circle") {
-                direction_vector = direction_vector.multiply(radius);
+                direction_vector = direction_vector.multiply(Circle.radius);
                 var arr_endpoint = e_vec.sub(direction_vector);
                 return arr_endpoint;
             } else if (this.connection.type == "square") {
@@ -72,6 +72,7 @@ class Line {
                     }
                 }
             }
+            return this.e;
         } else {
             return this.e;
         }
@@ -147,6 +148,8 @@ class Circle extends Geometrics {
         super(center, content, "circle");
     }
 
+    static radius = 40;
+
     /**
      * check if a given point lies inside the circle
      * @param {Number} x the x coordinate of the point
@@ -154,7 +157,7 @@ class Circle extends Geometrics {
      * @returns wether the point lies inside the circle
      */
     in(x,y) {
-        return Math.sqrt(Math.pow((this.get_x() - x),2) + Math.pow((this.get_y() - y),2)) < radius / 2;
+        return Math.sqrt(Math.pow((this.get_x() - x),2) + Math.pow((this.get_y() - y),2)) < Circle.radius / 2;
     }
 }
 
