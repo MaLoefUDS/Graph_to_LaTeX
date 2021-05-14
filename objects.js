@@ -44,10 +44,37 @@ class Line {
 
         // ending point
         this.e = e;
+
+        this.connection = null;
     }
 
     get_color() {
         return main_stroke_color;
+    }
+
+    calculate_arrow_endpoint() {
+        if (this.connection != null) {
+            
+            var s_vec = new simpleVector(s);
+            var e_vec = new simpleVector(e);
+            var v = e_vec.sub(s_vec);
+            var direction_vector = v.multiply(1 / v.normalize());
+            
+            if (this.connection.type == "circle") {
+                direction_vector = direction_vector.multiply(radius);
+                var arr_endpoint = e_vec.sub(direction_vector);
+                return arr_endpoint;
+            } else if (this.connection.type == "square") {
+                for (var i = 0; i < v.normalize(); i++) {                    
+                    var ex_point = s_vec.add(direction_vector.multiply(i));
+                    if (Math.abs(ex_point.x - this.e.x) < square_w / 2 && Math.abs(ex_point.y - this.e.y) < square_h / 2) {
+                        return ex_point;
+                    }
+                }
+            }
+        } else {
+            return this.e;
+        }
     }
 }
 
@@ -211,8 +238,8 @@ class Selection {
 class simpleVector {
 
     constructor(dot) {
-        this.x = dot.x;
-        this.y = dot.y;
+        this.x = dot.get_x();
+        this.y = dot.get_y();
     }
 
     normalize() {
@@ -229,5 +256,12 @@ class simpleVector {
 
     multiply(fac) {
         return new simpleVector(new Dot(this.x * fac, this.y * fac));
+    }
+
+    static angle(a, b) {
+        var delta_x = b.get_x() - a.get_x();
+        var delta_y = b.get_y() - a.get_y();
+
+        return Math.atan(delta_y / delta_x);
     }
 }

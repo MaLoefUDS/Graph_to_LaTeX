@@ -125,18 +125,22 @@ document.getElementById('myCanvas').onmousedown = function(event){
             init_line = false;
         } else {
             end_point = new Dot(x, y);
+            connection = null;
 
             // attach end point to object if possible
             for (var i = 0; i < objects.length; i++) {
                 if (objects[i].in(x, y)) {
                     end_point = objects[i].center;
+                    connection = objects[i];
                     break;
                 }
             }
 
             // if start point is different from end point add line
             if (start_point.x != end_point.x || start_point.y != end_point.y) {
-                lines.push(new Line(start_point, end_point));
+                line = new Line(start_point, end_point);
+                line.connection = connection;
+                lines.push(line);
             }
 
             // line has ended now
