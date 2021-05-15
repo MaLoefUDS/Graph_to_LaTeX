@@ -137,7 +137,9 @@ let parse_line = function(input) {
     line.selected = input["selected"];
     line.moveable = input["moveable"];
     line.content = input["content"];
-    line.connection = parse_object(input["connection"]);
+    if (input["connection"] != null) {
+        line.connection = parse_object(input["connection"]);
+    }
     return line;
 }
 
@@ -437,8 +439,11 @@ let light_dark_mode = function() {
 let compile_latex = function(jsonString) {
     json = JSON.parse(jsonString);
 
-    compilable_objects = json['obj'];
-    compilable_lines = json['lns'];
+    compilable_objects = [];
+    compilable_lines   = [];
+
+    json['obj'].map(elem => compilable_objects.push(parse_object(elem)));
+    json['lns'].map(elem => compilable_lines.push(parse_line(elem)));
     
     // scaling values for the graph
     var radius = Circle.radius / 10;
@@ -454,7 +459,7 @@ let compile_latex = function(jsonString) {
     // compile all lines
     for (var i = 0; i < compilable_lines.length; i++) {
 
-        line = compilable_lines[i];
+        var line = compilable_lines[i];
 
         // calculate positions of endpoints on tikz plane
         var start_x = line.s.x / 10;
@@ -466,6 +471,14 @@ let compile_latex = function(jsonString) {
         tex_code += "\\draw ";
         tex_code += ("(" + start_x + ", " + start_y + ") -- (" + end_x + ", " + end_y + ")");
         tex_code += ";\n";
+        
+        // arrow end dot 
+        tex_code += "\\draw [black, fill=black] ";
+        var arr_endpoint = line.calculate_arrow_endpoint();
+        var x = Math.round(arr_endpoint.x) / 10;
+        var y = Math.round(-1 * arr_endpoint.y) / 10;
+        tex_code += ("(" + x + ", " + y + ") circle (" + radius / 7 + ")");
+        tex_code += ";\n" //end line
     }
     
     // compile all objects
