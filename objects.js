@@ -55,8 +55,8 @@ class Line {
     calculate_arrow_endpoint() {
         if (this.connection != null) {
             
-            var s_vec = new simpleVector(s);
-            var e_vec = new simpleVector(e);
+            var s_vec = new simpleVector(this.s);
+            var e_vec = new simpleVector(this.e);
             var v = e_vec.sub(s_vec);
             var direction_vector = v.multiply(1 / v.normalize());
             
@@ -66,9 +66,9 @@ class Line {
                 return arr_endpoint;
             } else if (this.connection.type == "square") {
                 for (var i = 0; i < v.normalize(); i++) {                    
-                    var ex_point = s_vec.add(direction_vector.multiply(i));
-                    if (Math.abs(ex_point.x - this.e.x) < Square.width / 2 && Math.abs(ex_point.y - this.e.y) < Square.height / 2) {
-                        return ex_point;
+                    var arr_endpoint = s_vec.add(direction_vector.multiply(i));
+                    if (Math.abs(arr_endpoint.x - this.e.x) < Square.width / 2 && Math.abs(arr_endpoint.y - this.e.y) < Square.height / 2) {
+                        return arr_endpoint;
                     }
                 }
             }
