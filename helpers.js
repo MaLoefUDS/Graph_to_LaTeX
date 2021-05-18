@@ -372,7 +372,7 @@ let clear_canvas = function(clear_objects) {
  */
 function scale() {
     slider_value = document.getElementById('grid_scaling').value;
-    griding  = 20 + 5 * slider_value;
+    griding  = 20 - 5 * slider_value;
     if (grid_status) {
         regrid();
     }

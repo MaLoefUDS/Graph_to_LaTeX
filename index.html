@@ -40,15 +40,11 @@
             </tr>
             <tr>
                 <th class="info"> Visual Functionality: </th>
-                <th onchange="draw()"> Object Scaling 
-                    <div class="slidecontainer"> 
-                        <input type="range" min="-30" max="30" value="0" class="slider" id="obj_scaling"> 
-                    </div>
+                <th onchange="draw()">-    Object Scaling    +
+                    <input type="range" min="-30" max="30" value="0" class="slider" id="obj_scaling"> 
                 </th>
-                <th onchange="scale()"> Grid Scaling
-                    <div class="slidecontainer"> 
-                        <input type="range" min="-3" max="3" value="0" class="slider" id="grid_scaling"> 
-                    </div> 
+                <th onchange="scale()">-    Grid Scaling    +
+                    <input type="range" min="-3" max="3" value="0" class="slider" id="grid_scaling"> 
                 </th>  
                 <th onclick="light_dark_mode()" id="l_d_switch"> Dark Mode </th>
                 <th> <img src="LaTeX.png" width="35px" onclick="compile_latex(toJSON())"></th>
