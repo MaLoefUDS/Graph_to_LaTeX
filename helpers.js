@@ -370,20 +370,9 @@ let clear_canvas = function(clear_objects) {
  * rescaling the canvas, including grid and objects and redraw
  * @param {String} operator wether to scale up or down
  */
-function scale(operator) {
-    if (operator == "+") {
-        if (griding > 5) {
-            griding  -= 5;
-            Circle.get_radius() += 5;
-            text_size = String(Number(text_size.replace('px', '')) + 1.5) + 'px';
-        }
-    } else {
-        griding  += 5;
-        Circle.get_radius() -= 5;
-        text_size = String(Number(text_size.replace('px', '')) - 1.5) + 'px';
-    }
-    Square.height = Circle.get_radius() * 2;
-    Square.width  = Square.height * 1.66;
+function scale() {
+    slider_value = document.getElementById('grid_scaling').value;
+    griding  = 20 + 5 * slider_value;
     if (grid_status) {
         regrid();
     }
@@ -453,7 +442,7 @@ let compile_latex = function(jsonString) {
     // tikz header
     var tex_code = (
         "\\begin{center}\n" +
-        "\\begin{tikzpicture}[scale=0.15]\n" +
+        "\\begin{tikzpicture}[scale=0.2]\n" +
         "\\tikzstyle{every node}+=[inner sep=0pt]"
     );
     

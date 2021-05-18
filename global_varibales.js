@@ -23,7 +23,7 @@ var griding = 20;
 var prefix = "\\";
 
 // size of text in objects
-var text_size = "14px";
+var text_size = "18px";
 
 // wether a new line has been started
 var init_line = true;
