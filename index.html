@@ -40,7 +40,11 @@
             </tr>
             <tr>
                 <th class="info"> Visual Functionality: </th>
-                <th onclick="scale(operator='+')"> + </th>
+                <th onchange="draw()"> Object Scaling 
+                    <div class="slidecontainer"> 
+                        <input type="range" min="-30" max="30" value="0" class="slider" id="obj_scaling"> 
+                    </div>
+                </th>
                 <th onclick="scale(operator='-')"> - </th>  
                 <th onclick="light_dark_mode()" id="l_d_switch"> Dark Mode </th>
                 <th> <img src="LaTeX.png" width="35px" onclick="compile_latex(toJSON())"></th>
@@ -147,13 +151,13 @@
             if (type == "circle") {
 
                 // draw circle
-                ctx.arc(x, y, Circle.radius, 0, 2 * Math.PI);
+                ctx.arc(x, y, Circle.get_radius(), 0, 2 * Math.PI);
                 ctx.fill();
             } else if (type == "square") {
 
                 // if object is no text object, draw box
                 if (!objects[i].is_text()) {
-                    ctx.rect(x - Square.width / 2, y - Square.height / 2, Square.width, Square.height);
+                    ctx.rect(x - Square.get_width() / 2, y - Square.get_height() / 2, Square.get_width(), Square.get_height());
                     ctx.fill();
                 }
             }

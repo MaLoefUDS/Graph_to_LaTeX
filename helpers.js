@@ -374,15 +374,15 @@ function scale(operator) {
     if (operator == "+") {
         if (griding > 5) {
             griding  -= 5;
-            Circle.radius += 5;
+            Circle.get_radius() += 5;
             text_size = String(Number(text_size.replace('px', '')) + 1.5) + 'px';
         }
     } else {
         griding  += 5;
-        Circle.radius -= 5;
+        Circle.get_radius() -= 5;
         text_size = String(Number(text_size.replace('px', '')) - 1.5) + 'px';
     }
-    Square.height = Circle.radius * 2;
+    Square.height = Circle.get_radius() * 2;
     Square.width  = Square.height * 1.66;
     if (grid_status) {
         regrid();
@@ -447,7 +447,7 @@ let compile_latex = function(jsonString) {
     json['lns'].map(elem => compilable_lines.push(parse_line(elem)));
     
     // scaling values for the graph
-    var radius = Circle.radius / 10;
+    var radius = Circle.get_radius() / 10;
     var square_width = radius * 1.66;
     
     // tikz header

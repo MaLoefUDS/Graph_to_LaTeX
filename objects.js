@@ -61,13 +61,13 @@ class Line {
             var direction_vector = v.multiply(1 / v.normalize());
             
             if (this.connection.type == "circle") {
-                direction_vector = direction_vector.multiply(Circle.radius);
+                direction_vector = direction_vector.multiply(Circle.get_radius());
                 var arr_endpoint = e_vec.sub(direction_vector);
                 return arr_endpoint;
             } else if (this.connection.type == "square") {
                 for (var i = 0; i < v.normalize(); i++) {                    
                     var arr_endpoint = s_vec.add(direction_vector.multiply(i));
-                    if (Math.abs(arr_endpoint.x - this.e.x) < Square.width / 2 && Math.abs(arr_endpoint.y - this.e.y) < Square.height / 2) {
+                    if (Math.abs(arr_endpoint.x - this.e.x) < Square.get_width() / 2 && Math.abs(arr_endpoint.y - this.e.y) < Square.get_height() / 2) {
                         return arr_endpoint;
                     }
                 }
@@ -150,6 +150,10 @@ class Circle extends Geometrics {
 
     static radius = 40;
 
+    static get_radius() {
+        return Circle.radius + (document.getElementById('obj_scaling').value / 2);
+    }
+
     /**
      * check if a given point lies inside the circle
      * @param {Number} x the x coordinate of the point
@@ -157,7 +161,7 @@ class Circle extends Geometrics {
      * @returns wether the point lies inside the circle
      */
     in(x,y) {
-        return Math.sqrt(Math.pow((this.get_x() - x),2) + Math.pow((this.get_y() - y),2)) < Circle.radius / 2;
+        return Math.sqrt(Math.pow((this.get_x() - x),2) + Math.pow((this.get_y() - y),2)) < Circle.get_radius() / 2;
     }
 }
 
@@ -172,8 +176,12 @@ class Square extends Geometrics {
         this.text = text;
     }
 
-    static height = Circle.radius * 2;
-    static width = Square.height * 1.66;
+    static get_height() {
+        return Circle.get_radius() * 2;
+    }
+    static get_width() {
+        return Square.get_height() * 1.66;
+    }
 
     is_text() {
         return this.text;
@@ -187,9 +195,9 @@ class Square extends Geometrics {
      */
     in(x,y) {
         if (this.text) {
-            return (Math.abs(this.get_x() - x) < Square.width / 3) && (Math.abs(this.get_y() - y) < Square.height / 4);    
+            return (Math.abs(this.get_x() - x) < Square.get_width() / 3) && (Math.abs(this.get_y() - y) < Square.get_height() / 4);    
         } else {
-            return ((Math.abs(this.get_x() - x) < Square.width) && (Math.abs(this.get_y() - y) < Square.height));
+            return ((Math.abs(this.get_x() - x) < Square.get_width()) && (Math.abs(this.get_y() - y) < Square.get_height()));
         }
     }
 }
