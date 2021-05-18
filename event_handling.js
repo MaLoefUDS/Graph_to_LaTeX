@@ -13,14 +13,16 @@ onmousemove = function(event){
     // if in edit mode
     if (mode == 4) {
 
-        // add selected elements to selection but last selected element last so that the 
-        // holdpoint is on the last selected object
-        for (var i = 0; i < objects.length; i++) {
-            if (objects[i].selected && i != last_selected) {
-                selection.add(i, objects[i]);
+        if (last_selected != null) {
+            // add selected elements to selection but last selected element last so that the 
+            // holdpoint is on the last selected object
+            for (var i = 0; i < objects.length; i++) {
+                if (objects[i].selected && i != last_selected) {
+                    selection.add(i, objects[i]);
+                }
             }
+            selection.add(last_selected, objects[last_selected]);
         }
-        selection.add(last_selected, objects[last_selected]);
 
         // if at max 1 object is selected and shift key is released ... 
         if (!selection.valid()) {
@@ -173,6 +175,7 @@ document.onkeydown = function(event) {
                     
                     // remove object
                     objects.splice(i, 1);
+                    last_selected = null;
 
                     // search attached lines and remove too
                     for (var j = 0; j < lines.length; j++) {

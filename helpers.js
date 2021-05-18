@@ -314,6 +314,7 @@ let check_approx = function(event) {
                 objects[i].moveable = false;
             }
         }
+        if (objects.filter(elem => elem.selected || elem.moveable).length == 0) last_selected = null;  
     }
 }
 
